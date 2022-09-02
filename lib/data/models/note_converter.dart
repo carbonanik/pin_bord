@@ -28,33 +28,33 @@ extension IntExt on int {
   }
 }
 
-extension NoteDataExt on NoteData {
-  Note toNote() {
-    return Note(
-      id: id,
-      title: title,
-      content: content,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      color: color.toColor(),
-      position: position.toOffset(),
-    );
-  }
-}
+// extension NoteDataExt on NoteData {
+//   Note toNote() {
+//     return Note(
+//       id: id,
+//       title: title,
+//       content: content,
+//       createdAt: createdAt,
+//       updatedAt: updatedAt,
+//       color: color.toColor(),
+//       position: position.toOffset(),
+//     );
+//   }
+// }
 
-extension NoteExt on Note {
-  NoteData toNoteData() {
-    return NoteData(
-      id: id,
-      title: title,
-      content: content,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      color: color?.toInt() ?? Colors.yellow.toInt(),
-      position: position?.string() ?? Offset.zero.string(),
-    );
-  }
-}
+// extension NoteExt on Note {
+//   NoteData toNoteData() {
+//     return NoteData(
+//       id: id,
+//       title: title,
+//       content: content,
+//       createdAt: createdAt,
+//       updatedAt: updatedAt,
+//       color: color?.toInt() ?? Colors.yellow.toInt(),
+//       position: position?.string() ?? Offset.zero.string(),
+//     );
+//   }
+// }
 
 // extension on NoteData {
 //   NotesCompanion toCompanion {

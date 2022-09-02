@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
-import 'package:drift/web.dart';
-import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart';
+// import 'package:drift/drift.dart';
+// import 'package:drift/native.dart';
+// import 'package:drift/web.dart';
+// import 'package:path/path.dart' as path;
+// import 'package:path_provider/path_provider.dart';
 
-import '../models/notes_data_model.dart';
+// import '../models/notes_data_model.dart';
 
-part 'note_database.g.dart';
+// part 'note_database.g.dart';
 
-// ignore: unused_element
+// // ignore: unused_element
 // LazyDatabase _openConnection() {
 //   return LazyDatabase(() async {
 //     final dbFolder = await getApplicationDocumentsDirectory();
@@ -19,30 +19,32 @@ part 'note_database.g.dart';
 //   });
 // }
 
-@DriftDatabase(tables: [Notes])
-class NoteDatabase extends _$NoteDatabase {
-  NoteDatabase() : super(WebDatabase('note_database'));
+// _webDatabase() => WebDatabase('note_database');
 
-  @override
-  int get schemaVersion => 1;
+// @DriftDatabase(tables: [Notes])
+// class NoteDatabase extends _$NoteDatabase {
+//   NoteDatabase() : super(_webDatabase());
 
-  Future<List<NoteData>> getNotes() async {
-    return await select(notes).get();
-  }
+//   @override
+//   int get schemaVersion => 1;
 
-  Future<NoteData> getNote(int id) async {
-    return await (select(notes)..where((tbl) => tbl.id.equals(id))).getSingle();
-  }
+//   Future<List<NoteData>> getNotes() async {
+//     return await select(notes).get();
+//   }
 
-  Future<bool> updateNote(NotesCompanion note) async {
-    return await update(notes).replace(note);
-  }
+//   Future<NoteData> getNote(int id) async {
+//     return await (select(notes)..where((tbl) => tbl.id.equals(id))).getSingle();
+//   }
 
-  Future<int> insertNote(NotesCompanion note) async {
-    return await into(notes).insert(note);
-  }
+//   Future<bool> updateNote(NotesCompanion note) async {
+//     return await update(notes).replace(note);
+//   }
 
-  Future<int> deleteNote(int id) async {
-    return await (delete(notes)..where((tbl) => tbl.id.equals(id))).go();
-  }
-}
+//   Future<int> insertNote(NotesCompanion note) async {
+//     return await into(notes).insert(note);
+//   }
+
+//   Future<int> deleteNote(int id) async {
+//     return await (delete(notes)..where((tbl) => tbl.id.equals(id))).go();
+//   }
+// }

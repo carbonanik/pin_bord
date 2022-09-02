@@ -11,9 +11,9 @@ void init() async {
   inj.registerLazySingleton(() => NoteBloc(noteRepository: inj()));
 
   // Repository
-  inj.registerLazySingleton<NoteRepository>(
-      () => NoteRepositoryImpl(noteDatabase: inj()));
+  // inj.registerLazySingleton<NoteRepository>(
+  //     () => NoteRepositoryImpl(noteDatabase: inj()));
 
   // Data Source
-  inj.registerLazySingleton(() => NoteDatabase());
+  // inj.registerLazySingleton(() => NoteDatabase());
 }

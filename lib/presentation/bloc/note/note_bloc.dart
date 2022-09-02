@@ -25,8 +25,8 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
     //
     //
     on<GetNotesEvent>((event, emit) async {
-      final List<Note> notes = await noteRepository.getNotes();
-      emit(NotesLoaded(notes: notes));
+      // final List<Note> notes = await noteRepository.getNotes();
+      // emit(NotesLoaded(notes: notes));
     });
     //
     //
