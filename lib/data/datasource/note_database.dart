@@ -1,4 +1,4 @@
-import 'dart:io';
+// import 'dart:io';
 
 // import 'package:drift/drift.dart';
 // import 'package:drift/native.dart';
@@ -28,23 +28,23 @@ import 'dart:io';
 //   @override
 //   int get schemaVersion => 1;
 
-//   Future<List<NoteData>> getNotes() async {
-//     return await select(notes).get();
-//   }
+  // Future<List<NoteData>> getNotes() async {
+  //   return await select(notes).get();
+  // }
 
-//   Future<NoteData> getNote(int id) async {
-//     return await (select(notes)..where((tbl) => tbl.id.equals(id))).getSingle();
-//   }
+  // Future<NoteData> getNote(int id) async {
+  //   return await (select(notes)..where((tbl) => tbl.id.equals(id))).getSingle();
+  // }
 
-//   Future<bool> updateNote(NotesCompanion note) async {
-//     return await update(notes).replace(note);
-//   }
+  // Future<bool> updateNote(NotesCompanion note) async {
+  //   return await update(notes).replace(note);
+  // }
 
-//   Future<int> insertNote(NotesCompanion note) async {
-//     return await into(notes).insert(note);
-//   }
+  // Future<int> insertNote(NotesCompanion note) async {
+  //   return await into(notes).insert(note);
+  // }
 
-//   Future<int> deleteNote(int id) async {
-//     return await (delete(notes)..where((tbl) => tbl.id.equals(id))).go();
-//   }
+  // Future<int> deleteNote(int id) async {
+  //   return await (delete(notes)..where((tbl) => tbl.id.equals(id))).go();
+  // }
 // }

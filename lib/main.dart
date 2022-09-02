@@ -15,16 +15,16 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
-  // final _appRoute = AppRouter();
+  final _appRoute = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: NoteStackPage(),
-    );
-    // return MaterialApp.router(
-    //   routeInformationParser: _appRoute.defaultRouteParser(),
-    //   routerDelegate: _appRoute.delegate(),
+    // return MaterialApp(
+    //   home: NoteStackPage(),
     // );
+    return MaterialApp.router(
+      routeInformationParser: _appRoute.defaultRouteParser(),
+      routerDelegate: _appRoute.delegate(),
+    );
   }
 }

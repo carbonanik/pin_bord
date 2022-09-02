@@ -19,7 +19,7 @@ dependencies:
   # path: ^1.8.1
   flutter_bloc: ^8.1.1
   equatable: ^2.0.5
-  # auto_route: ^5.0.1
+  auto_route: ^5.0.1
   get_it: ^7.2.0
 
 dev_dependencies:
@@ -28,8 +28,8 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
   # drift_dev: ^1.7.0
-  # auto_route_generator: ^5.0.1
-  # build_runner: ^2.2.0
+  auto_route_generator: ^5.0.1
+  build_runner: ^2.2.0
 
 flutter:
 
