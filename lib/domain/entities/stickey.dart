@@ -2,15 +2,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-class Note extends Equatable {
-  const Note({
+class Stickey extends Equatable {
+  const Stickey({
     required this.id,
     required this.title,
     required this.content,
     required this.createdAt,
     required this.updatedAt,
-    required this.position,
-    this.color = Colors.yellow,
+    this.position,
+    this.color,
+    this.size,
   });
 
   final int id;
@@ -20,6 +21,7 @@ class Note extends Equatable {
   final DateTime? updatedAt;
   final Color? color;
   final Offset? position;
+  final Size? size;
 
   @override
   String toString() {
@@ -27,17 +29,10 @@ class Note extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        id,
-        title,
-        content,
-        createdAt,
-        updatedAt,
-        color,
-        position,
-      ];
+  List<Object?> get props =>
+      [id, title, content, createdAt, updatedAt, color, position, size];
 
-  Note copyWith({
+  Stickey copyWith({
     int? id,
     String? title,
     String? content,
@@ -45,8 +40,9 @@ class Note extends Equatable {
     DateTime? updatedAt,
     Color? color,
     Offset? position,
+    Size? size,
   }) {
-    return Note(
+    return Stickey(
       id: id ?? this.id,
       title: title ?? this.title,
       content: content ?? this.content,
@@ -54,6 +50,7 @@ class Note extends Equatable {
       updatedAt: updatedAt ?? this.updatedAt,
       color: color ?? this.color,
       position: position ?? this.position,
+      size: size ?? this.size,
     );
   }
 }

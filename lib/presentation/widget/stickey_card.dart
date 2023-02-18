@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../util/angle_corner.dart';
-import '../../domain/entities/note.dart';
+import '../../domain/entities/stickey.dart';
 
-class NoteCard extends StatelessWidget {
-  final Note note;
+class StickeyCard extends StatelessWidget {
+  final Stickey stickey;
 
-  const NoteCard({Key? key, required this.note}) : super(key: key);
+  const StickeyCard({Key? key, required this.stickey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +16,12 @@ class NoteCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           CustomPaint(
-            painter: AngleCorner(color: darken(note.color ?? Colors.yellow)),
+            painter: AngleCorner(color: darken(stickey.color ?? Colors.yellow)),
             child: Container(
               padding: const EdgeInsets.all(10),
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Text(note.title,
+                child: Text(stickey.title,
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold)),
               ),
@@ -30,8 +30,8 @@ class NoteCard extends StatelessWidget {
           Container(
             height: 100,
             padding: const EdgeInsets.all(10),
-            color: note.color,
-            child: Text(note.content, style: const TextStyle(fontSize: 20)),
+            color: stickey.color,
+            child: Text(stickey.content, style: const TextStyle(fontSize: 20)),
           )
         ],
       ),

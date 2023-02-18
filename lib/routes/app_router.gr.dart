@@ -17,9 +17,9 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    NoteStackPageRoute.name: (routeData) {
+    StickeyStackPageRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const NoteStackPage());
+          routeData: routeData, child: const StickeyStackPage());
     },
     CreateNotePageRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -29,17 +29,17 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   List<RouteConfig> get routes => [
-        RouteConfig(NoteStackPageRoute.name, path: '/'),
+        RouteConfig(StickeyStackPageRoute.name, path: '/'),
         RouteConfig(CreateNotePageRoute.name, path: '/create-note-page')
       ];
 }
 
 /// generated route for
-/// [NoteStackPage]
-class NoteStackPageRoute extends PageRouteInfo<void> {
-  const NoteStackPageRoute() : super(NoteStackPageRoute.name, path: '/');
+/// [StickeyStackPage]
+class StickeyStackPageRoute extends PageRouteInfo<void> {
+  const StickeyStackPageRoute() : super(StickeyStackPageRoute.name, path: '/');
 
-  static const String name = 'NoteStackPageRoute';
+  static const String name = 'StickeyStackPageRoute';
 }
 
 /// generated route for

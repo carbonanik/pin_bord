@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/note.dart';
-import '../datasource/note_database.dart';
-
 extension OffsetExt on Offset {
   String string() {
     return "${dx.toStringAsFixed(2)}:${dy.toStringAsFixed(2)}";

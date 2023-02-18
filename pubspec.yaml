@@ -21,6 +21,8 @@ dependencies:
   equatable: ^2.0.5
   auto_route: ^5.0.1
   get_it: ^7.2.0
+  # graphql: ^5.1.1
+  graphql_flutter: ^5.1.0
 
 dev_dependencies:
   flutter_test:

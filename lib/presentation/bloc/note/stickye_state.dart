@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-part of 'note_bloc.dart';
+part of 'stickey_bloc.dart';
 
 @immutable
-abstract class NoteState extends Equatable {
+abstract class StickeyState extends Equatable {
   final List<dynamic> properties;
-  const NoteState({
+  const StickeyState({
     this.properties = const [],
   });
 
@@ -16,20 +16,20 @@ abstract class NoteState extends Equatable {
 // class NotesInitial extends NoteState {}
 
 // note list loaded
-class NotesLoaded extends NoteState {
-  final List<Note> notes;
-  const NotesLoaded({
+class StickeyLoaded extends StickeyState {
+  final List<Stickey> notes;
+  const StickeyLoaded({
     required this.notes,
   }) : super(properties: notes);
 }
 
 // initial state for single note
-class NoteInitial extends NoteState {}
+class StickeyInitial extends StickeyState {}
 
 // single note loaded
-class NoteLoaded extends NoteState {
-  final Note note;
-  const NoteLoaded({
+class StickiesLoaded extends StickeyState {
+  final Stickey note;
+  const StickiesLoaded({
     required this.note,
   });
 }

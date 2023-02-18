@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pin_bord/domain/entities/note.dart';
-import 'package:pin_bord/presentation/bloc/note/note_bloc.dart';
+import 'package:pin_bord/domain/entities/stickey.dart';
+import 'package:pin_bord/presentation/bloc/note/stickey_bloc.dart';
 import 'package:pin_bord/presentation/widget/app_text_field.dart';
 
 class CreateNotePage extends StatefulWidget {
@@ -68,7 +68,7 @@ class _CreateNotePageState extends State<CreateNotePage> {
                   ),
                 ),
                 onPressed: () {
-                  final note = Note(
+                  final note = Stickey(
                       id: 8549,
                       title: titleTextController.text,
                       content: contentTextController.text,
@@ -77,8 +77,8 @@ class _CreateNotePageState extends State<CreateNotePage> {
                       position: const Offset(150, 150),
                       color: selectedColor);
 
-                  BlocProvider.of<NoteBloc>(context)
-                      .add(AddNoteEvent(note: note));
+                  BlocProvider.of<StickeyBloc>(context)
+                      .add(AddStickeyEvent(stickey: note));
                 },
                 child: const Text(
                   "Save Note",

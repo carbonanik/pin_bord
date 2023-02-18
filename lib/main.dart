@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pin_bord/data/datasource/note_database.dart';
-import 'package:pin_bord/presentation/pages/note_stack.dart';
-// import 'package:pin_bord/di/injector.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:pin_bord/data/datasource/graph_api_client.dart';
 import 'package:pin_bord/routes/app_router.dart';
 
-Future<void> main() async {
-  // final db = NoteDatabase();
-  // WidgetsFlutterBinding.ensureInitialized();
-  // init();
+import 'di/injector.dart';
+
+void main() async {
+  await initHiveForFlutter();
+  WidgetsFlutterBinding.ensureInitialized();
+  init();
 
   runApp(MyApp());
 }
@@ -22,9 +23,12 @@ class MyApp extends StatelessWidget {
     // return MaterialApp(
     //   home: NoteStackPage(),
     // );
-    return MaterialApp.router(
-      routeInformationParser: _appRoute.defaultRouteParser(),
-      routerDelegate: _appRoute.delegate(),
+    return GraphQLProvider(
+      client: inj<GraphQLService>().client,
+      child: MaterialApp.router(
+        routeInformationParser: _appRoute.defaultRouteParser(),
+        routerDelegate: _appRoute.delegate(),
+      ),
     );
   }
 }

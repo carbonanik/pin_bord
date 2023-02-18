@@ -1,28 +1,29 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../domain/entities/note.dart';
-import 'note_card.dart';
+import '../../domain/entities/stickey.dart';
+import 'stickey_card.dart';
 
-class NoteDraggable extends StatefulWidget {
-  final Note note;
+class StickeyDraggable extends StatefulWidget {
+  final Stickey stickey;
   final VoidCallback? onTap;
   final Function(Offset, int)? updatePosition;
 
-  NoteDraggable({Key? key, required this.note, this.onTap, this.updatePosition})
+  StickeyDraggable(
+      {Key? key, required this.stickey, this.onTap, this.updatePosition})
       : super(key: key);
 
   @override
-  State<NoteDraggable> createState() => _NoteDraggableState();
+  State<StickeyDraggable> createState() => _StickeyDraggableState();
 }
 
-class _NoteDraggableState extends State<NoteDraggable> {
+class _StickeyDraggableState extends State<StickeyDraggable> {
   late double _x = 0;
   late double _y = 0;
 
   @override
   Widget build(BuildContext context) {
-    _x = widget.note.position?.dx ?? 0;
-    _y = widget.note.position?.dy ?? 0;
+    _x = widget.stickey.position?.dx ?? 0;
+    _y = widget.stickey.position?.dy ?? 0;
     return Positioned(
       left: _x,
       top: _y,
@@ -30,19 +31,19 @@ class _NoteDraggableState extends State<NoteDraggable> {
         onTap: widget.onTap,
         child: Draggable(
           childWhenDragging: Container(),
-          feedback: NoteCard(
-            note: widget.note,
+          feedback: StickeyCard(
+            stickey: widget.stickey,
           ),
           onDragStarted: () {},
           onDragEnd: (dragDetails) {
-            widget.updatePosition?.call(dragDetails.offset, widget.note.id);
+            widget.updatePosition?.call(dragDetails.offset, widget.stickey.id);
             setState(() {
               _x = dragDetails.offset.dx;
               _y = dragDetails.offset.dy;
             });
           },
-          child: NoteCard(
-            note: widget.note,
+          child: StickeyCard(
+            stickey: widget.stickey,
           ),
         ),
       ),
