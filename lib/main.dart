@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:pin_bord/data/datasource/graph_api_client.dart';
+import 'package:pin_bord/presentation/pages/create_note.dart';
 import 'package:pin_bord/routes/app_router.dart';
 
 import 'di/injector.dart';
@@ -20,15 +21,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   home: NoteStackPage(),
-    // );
-    return GraphQLProvider(
-      client: inj<GraphQLService>().client,
-      child: MaterialApp.router(
-        routeInformationParser: _appRoute.defaultRouteParser(),
-        routerDelegate: _appRoute.delegate(),
-      ),
+    return MaterialApp(
+      home: CreateNotePage(),
     );
+    // return GraphQLProvider(
+    //   client: inj<GraphQLService>().client,
+    //   child: MaterialApp.router(
+    //     routeInformationParser: _appRoute.defaultRouteParser(),
+    //     routerDelegate: _appRoute.delegate(),
+    //   ),
+    // );
   }
 }

@@ -9,8 +9,8 @@ part 'app_router.gr.dart';
 
 @MaterialAutoRouter(
   routes: <AutoRoute>[
-    MaterialRoute(page: StickeyStackPage, initial: true),
-    MaterialRoute(page: CreateNotePage)
+    MaterialRoute(page: StickeyStackPage, initial: true, path: "/"),
+    MaterialRoute(page: CreateNotePage, path: "/create-note")
   ],
   // replaceInRouteName: 'page,Route',
 )
