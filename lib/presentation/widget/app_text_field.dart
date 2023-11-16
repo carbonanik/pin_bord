@@ -4,11 +4,11 @@ class AppTextField extends StatelessWidget {
   final TextEditingController textEditingController;
   final String hintText;
   final IconData icon;
-  bool isObscure;
-  int maxLength;
-  double fontSize;
+  final bool isObscure;
+  final int maxLength;
+  final double fontSize;
 
-  AppTextField({
+  const AppTextField({
     Key? key,
     required this.textEditingController,
     required this.hintText,

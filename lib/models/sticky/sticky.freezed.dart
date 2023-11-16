@@ -20,15 +20,25 @@ Sticky _$StickyFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Sticky {
-  int get id => throw _privateConstructorUsedError;
+  @HiveField(0)
+  String get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get title => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get content => throw _privateConstructorUsedError;
+  @HiveField(3)
   DateTime? get createdAt => throw _privateConstructorUsedError;
+  @HiveField(4)
   DateTime? get updatedAt => throw _privateConstructorUsedError;
+  @HiveField(5)
+  int get zIndex => throw _privateConstructorUsedError;
+  @HiveField(6)
   @ColorJsonConverter()
   Color? get color => throw _privateConstructorUsedError;
+  @HiveField(7)
   @OffsetJsonConverter()
   Offset? get position => throw _privateConstructorUsedError;
+  @HiveField(8)
   @SizeJsonConverter()
   Size? get size => throw _privateConstructorUsedError;
 
@@ -43,14 +53,15 @@ abstract class $StickyCopyWith<$Res> {
       _$StickyCopyWithImpl<$Res, Sticky>;
   @useResult
   $Res call(
-      {int id,
-      String title,
-      String content,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      @ColorJsonConverter() Color? color,
-      @OffsetJsonConverter() Offset? position,
-      @SizeJsonConverter() Size? size});
+      {@HiveField(0) String id,
+      @HiveField(1) String title,
+      @HiveField(2) String content,
+      @HiveField(3) DateTime? createdAt,
+      @HiveField(4) DateTime? updatedAt,
+      @HiveField(5) int zIndex,
+      @HiveField(6) @ColorJsonConverter() Color? color,
+      @HiveField(7) @OffsetJsonConverter() Offset? position,
+      @HiveField(8) @SizeJsonConverter() Size? size});
 }
 
 /// @nodoc
@@ -71,6 +82,7 @@ class _$StickyCopyWithImpl<$Res, $Val extends Sticky>
     Object? content = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? zIndex = null,
     Object? color = freezed,
     Object? position = freezed,
     Object? size = freezed,
@@ -79,7 +91,7 @@ class _$StickyCopyWithImpl<$Res, $Val extends Sticky>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -96,6 +108,10 @@ class _$StickyCopyWithImpl<$Res, $Val extends Sticky>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      zIndex: null == zIndex
+          ? _value.zIndex
+          : zIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       color: freezed == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -120,14 +136,15 @@ abstract class _$$StickyImplCopyWith<$Res> implements $StickyCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      String title,
-      String content,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      @ColorJsonConverter() Color? color,
-      @OffsetJsonConverter() Offset? position,
-      @SizeJsonConverter() Size? size});
+      {@HiveField(0) String id,
+      @HiveField(1) String title,
+      @HiveField(2) String content,
+      @HiveField(3) DateTime? createdAt,
+      @HiveField(4) DateTime? updatedAt,
+      @HiveField(5) int zIndex,
+      @HiveField(6) @ColorJsonConverter() Color? color,
+      @HiveField(7) @OffsetJsonConverter() Offset? position,
+      @HiveField(8) @SizeJsonConverter() Size? size});
 }
 
 /// @nodoc
@@ -146,6 +163,7 @@ class __$$StickyImplCopyWithImpl<$Res>
     Object? content = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? zIndex = null,
     Object? color = freezed,
     Object? position = freezed,
     Object? size = freezed,
@@ -154,7 +172,7 @@ class __$$StickyImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -171,6 +189,10 @@ class __$$StickyImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      zIndex: null == zIndex
+          ? _value.zIndex
+          : zIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       color: freezed == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -189,43 +211,57 @@ class __$$StickyImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$StickyImpl implements _Sticky {
-  const _$StickyImpl(
-      {required this.id,
-      required this.title,
-      required this.content,
-      required this.createdAt,
-      required this.updatedAt,
-      @ColorJsonConverter() this.color,
-      @OffsetJsonConverter() this.position,
-      @SizeJsonConverter() this.size});
+@HiveType(typeId: 0, adapterName: 'StickyAdapter')
+class _$StickyImpl extends _Sticky {
+  _$StickyImpl(
+      {@HiveField(0) required this.id,
+      @HiveField(1) required this.title,
+      @HiveField(2) required this.content,
+      @HiveField(3) required this.createdAt,
+      @HiveField(4) required this.updatedAt,
+      @HiveField(5) required this.zIndex,
+      @HiveField(6) @ColorJsonConverter() this.color,
+      @HiveField(7) @OffsetJsonConverter() this.position,
+      @HiveField(8) @SizeJsonConverter() this.size})
+      : super._();
 
   factory _$StickyImpl.fromJson(Map<String, dynamic> json) =>
       _$$StickyImplFromJson(json);
 
   @override
-  final int id;
+  @HiveField(0)
+  final String id;
   @override
+  @HiveField(1)
   final String title;
   @override
+  @HiveField(2)
   final String content;
   @override
+  @HiveField(3)
   final DateTime? createdAt;
   @override
+  @HiveField(4)
   final DateTime? updatedAt;
   @override
+  @HiveField(5)
+  final int zIndex;
+  @override
+  @HiveField(6)
   @ColorJsonConverter()
   final Color? color;
   @override
+  @HiveField(7)
   @OffsetJsonConverter()
   final Offset? position;
   @override
+  @HiveField(8)
   @SizeJsonConverter()
   final Size? size;
 
   @override
   String toString() {
-    return 'Sticky(id: $id, title: $title, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, color: $color, position: $position, size: $size)';
+    return 'Sticky(id: $id, title: $title, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, zIndex: $zIndex, color: $color, position: $position, size: $size)';
   }
 
   @override
@@ -240,6 +276,7 @@ class _$StickyImpl implements _Sticky {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
+            (identical(other.zIndex, zIndex) || other.zIndex == zIndex) &&
             (identical(other.color, color) || other.color == color) &&
             (identical(other.position, position) ||
                 other.position == position) &&
@@ -249,7 +286,7 @@ class _$StickyImpl implements _Sticky {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, title, content, createdAt,
-      updatedAt, color, position, size);
+      updatedAt, zIndex, color, position, size);
 
   @JsonKey(ignore: true)
   @override
@@ -265,40 +302,230 @@ class _$StickyImpl implements _Sticky {
   }
 }
 
-abstract class _Sticky implements Sticky {
-  const factory _Sticky(
-      {required final int id,
-      required final String title,
-      required final String content,
-      required final DateTime? createdAt,
-      required final DateTime? updatedAt,
-      @ColorJsonConverter() final Color? color,
-      @OffsetJsonConverter() final Offset? position,
-      @SizeJsonConverter() final Size? size}) = _$StickyImpl;
+abstract class _Sticky extends Sticky {
+  factory _Sticky(
+      {@HiveField(0) required final String id,
+      @HiveField(1) required final String title,
+      @HiveField(2) required final String content,
+      @HiveField(3) required final DateTime? createdAt,
+      @HiveField(4) required final DateTime? updatedAt,
+      @HiveField(5) required final int zIndex,
+      @HiveField(6) @ColorJsonConverter() final Color? color,
+      @HiveField(7) @OffsetJsonConverter() final Offset? position,
+      @HiveField(8) @SizeJsonConverter() final Size? size}) = _$StickyImpl;
+  _Sticky._() : super._();
 
   factory _Sticky.fromJson(Map<String, dynamic> json) = _$StickyImpl.fromJson;
 
   @override
-  int get id;
+  @HiveField(0)
+  String get id;
   @override
+  @HiveField(1)
   String get title;
   @override
+  @HiveField(2)
   String get content;
   @override
+  @HiveField(3)
   DateTime? get createdAt;
   @override
+  @HiveField(4)
   DateTime? get updatedAt;
   @override
+  @HiveField(5)
+  int get zIndex;
+  @override
+  @HiveField(6)
   @ColorJsonConverter()
   Color? get color;
   @override
+  @HiveField(7)
   @OffsetJsonConverter()
   Offset? get position;
   @override
+  @HiveField(8)
   @SizeJsonConverter()
   Size? get size;
   @override
   @JsonKey(ignore: true)
   _$$StickyImplCopyWith<_$StickyImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+CreateSticky _$CreateStickyFromJson(Map<String, dynamic> json) {
+  return _CreateSticky.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CreateSticky {
+  String get title => throw _privateConstructorUsedError;
+  String get content => throw _privateConstructorUsedError;
+  @ColorJsonConverter()
+  Color? get color => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CreateStickyCopyWith<CreateSticky> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateStickyCopyWith<$Res> {
+  factory $CreateStickyCopyWith(
+          CreateSticky value, $Res Function(CreateSticky) then) =
+      _$CreateStickyCopyWithImpl<$Res, CreateSticky>;
+  @useResult
+  $Res call({String title, String content, @ColorJsonConverter() Color? color});
+}
+
+/// @nodoc
+class _$CreateStickyCopyWithImpl<$Res, $Val extends CreateSticky>
+    implements $CreateStickyCopyWith<$Res> {
+  _$CreateStickyCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? content = null,
+    Object? color = freezed,
+  }) {
+    return _then(_value.copyWith(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CreateStickyImplCopyWith<$Res>
+    implements $CreateStickyCopyWith<$Res> {
+  factory _$$CreateStickyImplCopyWith(
+          _$CreateStickyImpl value, $Res Function(_$CreateStickyImpl) then) =
+      __$$CreateStickyImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String title, String content, @ColorJsonConverter() Color? color});
+}
+
+/// @nodoc
+class __$$CreateStickyImplCopyWithImpl<$Res>
+    extends _$CreateStickyCopyWithImpl<$Res, _$CreateStickyImpl>
+    implements _$$CreateStickyImplCopyWith<$Res> {
+  __$$CreateStickyImplCopyWithImpl(
+      _$CreateStickyImpl _value, $Res Function(_$CreateStickyImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? content = null,
+    Object? color = freezed,
+  }) {
+    return _then(_$CreateStickyImpl(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CreateStickyImpl implements _CreateSticky {
+  const _$CreateStickyImpl(
+      {required this.title,
+      required this.content,
+      @ColorJsonConverter() this.color});
+
+  factory _$CreateStickyImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CreateStickyImplFromJson(json);
+
+  @override
+  final String title;
+  @override
+  final String content;
+  @override
+  @ColorJsonConverter()
+  final Color? color;
+
+  @override
+  String toString() {
+    return 'CreateSticky(title: $title, content: $content, color: $color)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CreateStickyImpl &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.color, color) || other.color == color));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, title, content, color);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CreateStickyImplCopyWith<_$CreateStickyImpl> get copyWith =>
+      __$$CreateStickyImplCopyWithImpl<_$CreateStickyImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CreateStickyImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CreateSticky implements CreateSticky {
+  const factory _CreateSticky(
+      {required final String title,
+      required final String content,
+      @ColorJsonConverter() final Color? color}) = _$CreateStickyImpl;
+
+  factory _CreateSticky.fromJson(Map<String, dynamic> json) =
+      _$CreateStickyImpl.fromJson;
+
+  @override
+  String get title;
+  @override
+  String get content;
+  @override
+  @ColorJsonConverter()
+  Color? get color;
+  @override
+  @JsonKey(ignore: true)
+  _$$CreateStickyImplCopyWith<_$CreateStickyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

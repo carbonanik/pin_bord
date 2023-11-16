@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:pin_bord/models/sticky/sticky.dart';
 
-import '../../domain/entities/sticky.dart';
 import 'sticky_card.dart';
 
 class StickyDraggable extends StatefulWidget {
   final Sticky sticky;
   final VoidCallback? onTap;
-  final Function(Offset, int)? updatePosition;
+  final Function(Offset offset, String id)? updatePosition;
 
-  const StickyDraggable({Key? key, required this.sticky, this.onTap, this.updatePosition}) : super(key: key);
+  const StickyDraggable({
+    Key? key,
+    required this.sticky,
+    this.onTap,
+    this.updatePosition,
+  }) : super(key: key);
 
   @override
   State<StickyDraggable> createState() => _StickyDraggableState();

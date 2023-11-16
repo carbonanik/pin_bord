@@ -1,52 +1,96 @@
-// **************************************************************************
-// AutoRouteGenerator
-// **************************************************************************
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// AutoRouteGenerator
+// AutoRouterGenerator
 // **************************************************************************
-//
+
 // ignore_for_file: type=lint
+// coverage:ignore-file
 
 part of 'app_router.dart';
 
-class _$AppRouter extends RootStackRouter {
-  _$AppRouter([GlobalKey<NavigatorState>? navigatorKey]) : super(navigatorKey);
+abstract class _$AppRouter extends RootStackRouter {
+  // ignore: unused_element
+  _$AppRouter({super.navigatorKey});
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    StickeyStackPageRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const StickeyStackPage());
-    },
     CreateNotePageRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const CreateNotePage());
-    }
+      final args = routeData.argsAs<CreateNotePageRouteArgs>(
+          orElse: () => const CreateNotePageRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: CreateNotePage(key: args.key),
+      );
+    },
+    LogicPageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LogicPage(),
+      );
+    },
+    StickyStackPageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const StickyStackPage(),
+      );
+    },
   };
-
-  @override
-  List<RouteConfig> get routes => [
-        RouteConfig(StickeyStackPageRoute.name, path: '/'),
-        RouteConfig(CreateNotePageRoute.name, path: '/create-note-page')
-      ];
-}
-
-/// generated route for
-/// [StickeyStackPage]
-class StickeyStackPageRoute extends PageRouteInfo<void> {
-  const StickeyStackPageRoute() : super(StickeyStackPageRoute.name, path: '/');
-
-  static const String name = 'StickeyStackPageRoute';
 }
 
 /// generated route for
 /// [CreateNotePage]
-class CreateNotePageRoute extends PageRouteInfo<void> {
-  const CreateNotePageRoute()
-      : super(CreateNotePageRoute.name, path: '/create-note-page');
+class CreateNotePageRoute extends PageRouteInfo<CreateNotePageRouteArgs> {
+  CreateNotePageRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CreateNotePageRoute.name,
+          args: CreateNotePageRouteArgs(key: key),
+          initialChildren: children,
+        );
 
   static const String name = 'CreateNotePageRoute';
+
+  static const PageInfo<CreateNotePageRouteArgs> page =
+      PageInfo<CreateNotePageRouteArgs>(name);
+}
+
+class CreateNotePageRouteArgs {
+  const CreateNotePageRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'CreateNotePageRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [LogicPage]
+class LogicPageRoute extends PageRouteInfo<void> {
+  const LogicPageRoute({List<PageRouteInfo>? children})
+      : super(
+          LogicPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LogicPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [StickyStackPage]
+class StickyStackPageRoute extends PageRouteInfo<void> {
+  const StickyStackPageRoute({List<PageRouteInfo>? children})
+      : super(
+          StickyStackPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'StickyStackPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
