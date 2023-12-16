@@ -529,3 +529,180 @@ abstract class _CreateSticky implements CreateSticky {
   _$$CreateStickyImplCopyWith<_$CreateStickyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+UpdateSticky _$UpdateStickyFromJson(Map<String, dynamic> json) {
+  return _UpdateSticky.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UpdateSticky {
+  String get title => throw _privateConstructorUsedError;
+  String get content => throw _privateConstructorUsedError;
+  @ColorJsonConverter()
+  Color? get color => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UpdateStickyCopyWith<UpdateSticky> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UpdateStickyCopyWith<$Res> {
+  factory $UpdateStickyCopyWith(
+          UpdateSticky value, $Res Function(UpdateSticky) then) =
+      _$UpdateStickyCopyWithImpl<$Res, UpdateSticky>;
+  @useResult
+  $Res call({String title, String content, @ColorJsonConverter() Color? color});
+}
+
+/// @nodoc
+class _$UpdateStickyCopyWithImpl<$Res, $Val extends UpdateSticky>
+    implements $UpdateStickyCopyWith<$Res> {
+  _$UpdateStickyCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? content = null,
+    Object? color = freezed,
+  }) {
+    return _then(_value.copyWith(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UpdateStickyImplCopyWith<$Res>
+    implements $UpdateStickyCopyWith<$Res> {
+  factory _$$UpdateStickyImplCopyWith(
+          _$UpdateStickyImpl value, $Res Function(_$UpdateStickyImpl) then) =
+      __$$UpdateStickyImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String title, String content, @ColorJsonConverter() Color? color});
+}
+
+/// @nodoc
+class __$$UpdateStickyImplCopyWithImpl<$Res>
+    extends _$UpdateStickyCopyWithImpl<$Res, _$UpdateStickyImpl>
+    implements _$$UpdateStickyImplCopyWith<$Res> {
+  __$$UpdateStickyImplCopyWithImpl(
+      _$UpdateStickyImpl _value, $Res Function(_$UpdateStickyImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? content = null,
+    Object? color = freezed,
+  }) {
+    return _then(_$UpdateStickyImpl(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UpdateStickyImpl implements _UpdateSticky {
+  const _$UpdateStickyImpl(
+      {required this.title,
+      required this.content,
+      @ColorJsonConverter() this.color});
+
+  factory _$UpdateStickyImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UpdateStickyImplFromJson(json);
+
+  @override
+  final String title;
+  @override
+  final String content;
+  @override
+  @ColorJsonConverter()
+  final Color? color;
+
+  @override
+  String toString() {
+    return 'UpdateSticky(title: $title, content: $content, color: $color)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdateStickyImpl &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.color, color) || other.color == color));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, title, content, color);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdateStickyImplCopyWith<_$UpdateStickyImpl> get copyWith =>
+      __$$UpdateStickyImplCopyWithImpl<_$UpdateStickyImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UpdateStickyImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UpdateSticky implements UpdateSticky {
+  const factory _UpdateSticky(
+      {required final String title,
+      required final String content,
+      @ColorJsonConverter() final Color? color}) = _$UpdateStickyImpl;
+
+  factory _UpdateSticky.fromJson(Map<String, dynamic> json) =
+      _$UpdateStickyImpl.fromJson;
+
+  @override
+  String get title;
+  @override
+  String get content;
+  @override
+  @ColorJsonConverter()
+  Color? get color;
+  @override
+  @JsonKey(ignore: true)
+  _$$UpdateStickyImplCopyWith<_$UpdateStickyImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

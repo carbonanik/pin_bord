@@ -130,3 +130,19 @@ Map<String, dynamic> _$$CreateStickyImplToJson(_$CreateStickyImpl instance) =>
       'color': _$JsonConverterToJson<Map<String, dynamic>, Color>(
           instance.color, const ColorJsonConverter().toJson),
     };
+
+_$UpdateStickyImpl _$$UpdateStickyImplFromJson(Map<String, dynamic> json) =>
+    _$UpdateStickyImpl(
+      title: json['title'] as String,
+      content: json['content'] as String,
+      color: _$JsonConverterFromJson<Map<String, dynamic>, Color>(
+          json['color'], const ColorJsonConverter().fromJson),
+    );
+
+Map<String, dynamic> _$$UpdateStickyImplToJson(_$UpdateStickyImpl instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'content': instance.content,
+      'color': _$JsonConverterToJson<Map<String, dynamic>, Color>(
+          instance.color, const ColorJsonConverter().toJson),
+    };

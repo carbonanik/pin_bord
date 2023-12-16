@@ -23,16 +23,23 @@ abstract class _$AppRouter extends RootStackRouter {
         child: CreateNotePage(key: args.key),
       );
     },
-    LogicPageRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const LogicPage(),
-      );
-    },
     StickyStackPageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const StickyStackPage(),
+      );
+    },
+    UpdateNoteRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<UpdateNoteRouteArgs>(
+          orElse: () =>
+              UpdateNoteRouteArgs(updateId: pathParams.getString('id')));
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: UpdateNote(
+          updateId: args.updateId,
+          key: args.key,
+        ),
       );
     },
   };
@@ -68,20 +75,6 @@ class CreateNotePageRouteArgs {
 }
 
 /// generated route for
-/// [LogicPage]
-class LogicPageRoute extends PageRouteInfo<void> {
-  const LogicPageRoute({List<PageRouteInfo>? children})
-      : super(
-          LogicPageRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'LogicPageRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [StickyStackPage]
 class StickyStackPageRoute extends PageRouteInfo<void> {
   const StickyStackPageRoute({List<PageRouteInfo>? children})
@@ -93,4 +86,43 @@ class StickyStackPageRoute extends PageRouteInfo<void> {
   static const String name = 'StickyStackPageRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [UpdateNote]
+class UpdateNoteRoute extends PageRouteInfo<UpdateNoteRouteArgs> {
+  UpdateNoteRoute({
+    required String updateId,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          UpdateNoteRoute.name,
+          args: UpdateNoteRouteArgs(
+            updateId: updateId,
+            key: key,
+          ),
+          rawPathParams: {'id': updateId},
+          initialChildren: children,
+        );
+
+  static const String name = 'UpdateNoteRoute';
+
+  static const PageInfo<UpdateNoteRouteArgs> page =
+      PageInfo<UpdateNoteRouteArgs>(name);
+}
+
+class UpdateNoteRouteArgs {
+  const UpdateNoteRouteArgs({
+    required this.updateId,
+    this.key,
+  });
+
+  final String updateId;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'UpdateNoteRouteArgs{updateId: $updateId, key: $key}';
+  }
 }

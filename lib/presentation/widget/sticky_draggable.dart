@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
-
 import 'sticky_card.dart';
 
 class StickyDraggable extends StatefulWidget {
   final Sticky sticky;
   final VoidCallback? onTap;
-  final Function(Offset offset, String id)? updatePosition;
+  final Future<void> Function(Offset offset, String id)? updatePosition;
 
   const StickyDraggable({
     Key? key,
@@ -22,11 +21,13 @@ class StickyDraggable extends StatefulWidget {
 class _StickyDraggableState extends State<StickyDraggable> {
   late double _x = 0;
   late double _y = 0;
+  bool isDragging = false;
 
   @override
   Widget build(BuildContext context) {
-    _x = widget.sticky.position?.dx ?? 0;
-    _y = widget.sticky.position?.dy ?? 0;
+    final size = MediaQuery.of(context).size;
+    _x = widget.sticky.position?.dx ?? size.width / 2 - 150;
+    _y = widget.sticky.position?.dy ?? size.height / 10;
     return Positioned(
       left: _x,
       top: _y,
@@ -40,16 +41,22 @@ class _StickyDraggableState extends State<StickyDraggable> {
               sticky: widget.sticky,
             ),
           ),
-          onDragStarted: () {},
-          onDragEnd: (dragDetails) {
-            widget.updatePosition?.call(dragDetails.offset, widget.sticky.id);
+          onDragStarted: () {
             setState(() {
-              _x = dragDetails.offset.dx;
-              _y = dragDetails.offset.dy;
+              isDragging = true;
             });
           },
-          child: StickyCard(
-            sticky: widget.sticky,
+          onDragEnd: (dragDetails) async {
+            await widget.updatePosition?.call(dragDetails.offset, widget.sticky.id);
+            setState(() {
+              isDragging = false;
+            });
+          },
+          child: Opacity(
+            opacity: isDragging ? 0 : 1,
+            child: StickyCard(
+              sticky: widget.sticky,
+            ),
           ),
         ),
       ),

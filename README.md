@@ -1,16 +1,10 @@
-# pin_bord
+# Pin Board
 
-A new Flutter project.
+A simple sticky note app
 
-## Getting Started
+# Screenshots
+[Sticky Notes Stacks](screenshot/stack.png)
+[Sticky Notes Update](screenshot/update_big_screen.png)
+[Sticky Notes Update](screenshot/update_small_screen.png)
+[Sticky Notes Create](screenshot/create_small_screen.png)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

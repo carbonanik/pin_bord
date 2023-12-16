@@ -54,3 +54,14 @@ class CreateSticky with _$CreateSticky {
 
   factory CreateSticky.fromJson(Map<String, dynamic> json) => _$CreateStickyFromJson(json);
 }
+
+@freezed
+class UpdateSticky with _$UpdateSticky {
+  const factory UpdateSticky({
+    required String title,
+    required String content,
+    @ColorJsonConverter() Color? color,
+  }) = _UpdateSticky;
+
+  factory UpdateSticky.fromJson(Map<String, dynamic> json) => _$UpdateStickyFromJson(json);
+}

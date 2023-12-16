@@ -11,12 +11,10 @@ class StickyNotifier extends ChangeNotifier {
   StickyNotifier(this.ref) {
     _init();
   }
-  
+
   void _init() async {
     if ((await ref.read(stickyLocalProvider).getStickies()).isEmpty) {
-      for (var note in staticNotes) {
-        ref.read(stickyLocalProvider).addSticky(note.id, note);
-      }
+      await ref.read(stickyLocalProvider).addSticky(welcomeNote.id, welcomeNote);
       await ref.read(zIndexCounterProvider).updateZIndex(4);
     }
     await __updateList();
@@ -48,10 +46,25 @@ class StickyNotifier extends ChangeNotifier {
     await __updateList();
   }
 
-  Future<void> itemToTop(String id) async {
+  Future<void> updateSticky(UpdateSticky sticky, String id) async {
+    final oldSticky = await ref.read(stickyLocalProvider).getSticky(id);
+    if (oldSticky == null) return;
+    final updated = oldSticky.copyWith(
+      title: sticky.title,
+      content: sticky.content,
+      color: sticky.color,
+    );
+    await ref.read(stickyLocalProvider).updateSticky(id, updated);
+    await __updateList();
+  }
 
+  Sticky? getSticky(String id) {
+    return _notes.firstWhere((element) => element.id == id);
+  }
+
+  Future<void> itemToTop(String id) async {
     final sticky = await ref.read(stickyLocalProvider).getSticky(id);
-    if(sticky == null) return;
+    if (sticky == null) return;
 
     final currentZIndex = await ref.read(zIndexCounterProvider).getZIndex();
     final stickyUpdate = sticky.copyWith(zIndex: currentZIndex + 1);
@@ -62,9 +75,6 @@ class StickyNotifier extends ChangeNotifier {
   }
 
   Future<void> updatePosition(Offset offset, String id) async {
-    // final i = _notes.indexWhere((element) => element.id == id);
-    // final su = _notes[i].copyWith(position: offset);
-    // _notes[i] = su;
     final sticky = await ref.read(stickyLocalProvider).getSticky(id);
     if (sticky == null) return;
     await ref.read(stickyLocalProvider).updateSticky(id, sticky.copyWith(position: offset));
@@ -84,48 +94,15 @@ final stickyProvider = ChangeNotifierProvider<StickyNotifier>((ref) {
   return StickyNotifier(ref);
 });
 
-final List<Sticky> staticNotes = [
-  Sticky(
-    id: const UuidV4().generate(),
-    zIndex: 1,
-    title: 'Note 1',
-    content: 'Note 1 Content',
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-    color: colors[0],
-    position: const Offset(10, 10),
-  ),
-  Sticky(
-    id: const UuidV4().generate(),
-    zIndex: 2,
-    title: 'Note 2',
-    content: 'Note 2 Content',
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-    color: colors[1],
-    position: const Offset(50, 50),
-  ),
-  Sticky(
-    id: const UuidV4().generate(),
-    zIndex: 3,
-    title: 'Note 3',
-    content: 'Note 3 Content',
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-    color: colors[2],
-    position: const Offset(100, 100),
-  ),
-  Sticky(
-    id: const UuidV4().generate(),
-    zIndex: 4,
-    title: 'Note 4',
-    content: 'Note 4 Content',
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-    color: colors[3],
-    position: const Offset(150, 150),
-  ),
-];
+final Sticky welcomeNote = Sticky(
+  id: const UuidV4().generate(),
+  zIndex: 4,
+  title: 'Welcome to Pin Bord!',
+  content: 'Hey 👋 \n\nThis is a simple app to pin your notes. \n\n🎉',
+  createdAt: DateTime.now(),
+  updatedAt: DateTime.now(),
+  color: colors[3],
+);
 
 final colors = [
   Colors.red,

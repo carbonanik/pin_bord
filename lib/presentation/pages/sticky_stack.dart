@@ -21,49 +21,28 @@ class _StickyStackPageState extends State<StickyStackPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           AutoRouter.of(context).push(CreateNotePageRoute());
-          // setState(() {
-          //   _notes.add(Note(
-          //     id: _notes.length + 1,
-          //     title: 'Note ${_notes.length + 1}',
-          //     content: 'Note ${_notes.length + 1} Content',
-          //     createdAt: DateTime.now(),
-          //     updatedAt: DateTime.now(),
-          //     color: Colors.red,
-          //     position: const Offset(100, 100),
-          //   ));
-          // });
-          // router.push(const CreateNotePageRoute());
-          // var st = Stickey(
-          //   id: -1,
-          //   title: 'Note ${_notes.length + 1}',
-          //   content: 'Note ${_notes.length + 1} Content',
-          //   createdAt: DateTime.now(),
-          //   updatedAt: DateTime.now(),
-          //   color: Colors.red,
-          //   position: const Offset(100, 100),
-          // );
-          // print(st);
         },
         child: const Icon(Icons.note_add),
       ),
-      // 🤔🤔🤔🤔
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Consumer(builder: (context, ref, child) {
-        final notifier = ref.watch(stickyProvider);
-        return Stack(
-          children: notifier.notes
-              .map(
-                (s) => StickyDraggable(
-                  sticky: s,
-                  onTap: () async {
-                    await notifier.itemToTop(s.id);
-                  },
-                  updatePosition: (offset, id) async => notifier.updatePosition(offset, id),
-                ),
-              )
-              .toList(),
-        );
-      }),
+      body: Consumer(
+        builder: (context, ref, child) {
+          final notifier = ref.watch(stickyProvider);
+          return Stack(
+            children: notifier.notes
+                .map(
+                  (sticky) => StickyDraggable(
+                    sticky: sticky,
+                    onTap: () async {
+                      await notifier.itemToTop(sticky.id);
+                    },
+                    updatePosition: (offset, id) async => await notifier.updatePosition(offset, id),
+                  ),
+                )
+                .toList(),
+          );
+        },
+      ),
     );
   }
 }

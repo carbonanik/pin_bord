@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_bord/data/datasource/local/init_hive.dart';
-import 'package:pin_bord/presentation/pages/sticky_stack.dart';
 import 'package:pin_bord/routes/app_router.dart';
 
-import 'presentation/pages/logic_page.dart';
 
 void main() async {
   await initHiveDriver();
@@ -20,6 +19,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _router.config(),
+      theme: ThemeData(
+        fontFamily: GoogleFonts.preahvihear().fontFamily,
+      ),
     );
     // return MaterialApp(
     //   home: StickyStackPage(),
