@@ -28,3 +28,15 @@ class MyApp extends StatelessWidget {
     // );
   }
 }
+
+// ? Firebase
+// sudo npm install -g firebase-tools
+// dart pub global activate flutterfire_cli
+// export PATH="$PATH":"$HOME/.pub-cache/bin"
+// firebase login
+// flutterfire configure
+// git ignore
+// firebase experiments:enable webframeworks
+// firebase init hosting
+// flutter build web
+// firebase deploy
