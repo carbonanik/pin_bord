@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
+import 'package:pin_bord/provider/note_color_provider.dart';
 import 'package:pin_bord/routes/app_router.dart';
-import 'package:pin_bord/util/angle_corner.dart';
+import 'package:pin_bord/util/color_ext.dart';
+import 'package:pin_bord/util/corner_cut.dart';
 
 class StickyCard extends ConsumerWidget {
   final Sticky sticky;
@@ -21,10 +23,8 @@ class StickyCard extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CustomPaint(
-                painter: AngleCorner(
-                  color: darken(
-                    sticky.color ?? Colors.yellow,
-                  ),
+                painter: CornerCut(
+                  color: (sticky.color ?? ref.read(colorsProvider).last).darken2(),
                 ),
                 child: Container(
                   padding: const EdgeInsets.all(10),
@@ -32,10 +32,13 @@ class StickyCard extends ConsumerWidget {
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Text(
                       sticky.title,
-                      style: GoogleFonts.preahvihear(
+                      style: GoogleFonts.kalam(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        color: (sticky.color ?? ref.read(colorsProvider).last).darken2(.5),
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
@@ -46,7 +49,10 @@ class StickyCard extends ConsumerWidget {
                 color: sticky.color,
                 child: Text(
                   sticky.content,
-                  style: GoogleFonts.kalam(fontSize: 20),
+                  style: GoogleFonts.kalam(
+                    fontSize: 20,
+                    color: (sticky.color ?? ref.read(colorsProvider).last).darken2(.7),
+                  ),
                 ),
               )
             ],
@@ -87,13 +93,4 @@ class StickyCard extends ConsumerWidget {
       ],
     );
   }
-}
-
-Color darken(Color color, [double amount = .1]) {
-  assert(amount >= 0 && amount <= 1);
-
-  final hsl = HSLColor.fromColor(color);
-  final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
-
-  return hslDark.toColor();
 }

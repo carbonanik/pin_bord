@@ -6,8 +6,12 @@ final selectedColorProvider = StateProvider<Color>((ref) => _selectableColor.las
 final colorsProvider = Provider<List<Color>>((ref) => _selectableColor);
 
 final _selectableColor = [
-  Colors.red,
-  Colors.green,
-  Colors.blue,
-  Colors.yellow,
+  const Color(0xfff1f58f),
+  const Color(0xffffa930),
+  const Color(0xffff32b2),
+  const Color(0xffa9edf1),
+  const Color(0xff74ed4b),
 ];
+
+
+final unselectedColor = _selectableColor.first;

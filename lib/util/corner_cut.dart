@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AngleCorner extends CustomPainter {
+class CornerCut extends CustomPainter {
 
   final Color color;
   final PaintingStyle paintingStyle;
 
-  AngleCorner({this.color = Colors.black, this.paintingStyle = PaintingStyle.fill});
+  CornerCut({this.color = Colors.black, this.paintingStyle = PaintingStyle.fill});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -26,7 +26,7 @@ class AngleCorner extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(AngleCorner oldDelegate) {
+  bool shouldRepaint(CornerCut oldDelegate) {
     return oldDelegate.color != color ||
         oldDelegate.paintingStyle != paintingStyle;
   }

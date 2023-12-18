@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
+import 'package:pin_bord/provider/note_color_provider.dart';
 import 'package:pin_bord/provider/sticky_provider.dart';
 import 'package:pin_bord/util/json_converters.dart';
 
@@ -37,7 +38,7 @@ abstract class Sticky extends HiveObject with _$Sticky {
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
       zIndex: 0,
-      color: colors[Random().nextInt(colors.length)],
+      color: unselectedColor,
       position: const Offset(250, 250),
       size: const Size(0, 0),
     );
