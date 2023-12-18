@@ -21,6 +21,9 @@ class MyApp extends StatelessWidget {
       routerConfig: _router.config(),
       theme: ThemeData(
         fontFamily: GoogleFonts.preahvihear().fontFamily,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.greenAccent,
+        )
       ),
     );
     // return MaterialApp(
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// ? Firebase
+// ? Deploy to Firebase
 // sudo npm install -g firebase-tools
 // dart pub global activate flutterfire_cli
 // export PATH="$PATH":"$HOME/.pub-cache/bin"

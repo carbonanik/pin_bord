@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
+import 'package:pin_bord/provider/note_color_provider.dart';
 import 'package:pin_bord/provider/sticky_local_provider.dart';
 import 'package:pin_bord/provider/zindex_provider.dart';
 import 'package:uuid/v4.dart';
@@ -101,12 +102,12 @@ final Sticky welcomeNote = Sticky(
   content: 'Hey 👋 \n\nThis is a simple app to pin your notes. \n\n🎉',
   createdAt: DateTime.now(),
   updatedAt: DateTime.now(),
-  color: colors[3],
+  color: unselectedColor,
 );
 
-final colors = [
-  Colors.red,
-  Colors.green,
-  Colors.blue,
-  Colors.yellow,
-];
+// final colors = [
+//   Colors.red,
+//   Colors.green,
+//   Colors.blue,
+//   Colors.yellow,
+// ];
