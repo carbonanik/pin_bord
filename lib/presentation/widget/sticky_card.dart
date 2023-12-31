@@ -46,7 +46,7 @@ class StickyCard extends ConsumerWidget {
               Container(
                 constraints: const BoxConstraints(minHeight: 100),
                 padding: const EdgeInsets.all(10),
-                color: sticky.color,
+                color: sticky.color ?? ref.read(colorsProvider).last,
                 child: Text(
                   sticky.content,
                   style: GoogleFonts.kalam(

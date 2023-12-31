@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
+import 'package:pin_bord/provider/pan_position_provider.dart';
 import 'sticky_card.dart';
 
 class StickyDraggable extends StatefulWidget {
@@ -28,38 +30,42 @@ class _StickyDraggableState extends State<StickyDraggable> {
     final size = MediaQuery.of(context).size;
     _x = widget.sticky.position?.dx ?? size.width / 2 - 150;
     _y = widget.sticky.position?.dy ?? size.height / 10;
-    return Positioned(
-      left: _x,
-      top: _y,
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: Draggable(
-          childWhenDragging: Container(),
-          feedback: Material(
-            color: Colors.transparent,
-            child: StickyCard(
-              sticky: widget.sticky,
+    return Consumer(builder: (context, ref, child) {
+      final panPosition = ref.watch(panPositionProvider);
+      return Positioned(
+        left: _x + panPosition.dx,
+        top: _y + panPosition.dy,
+        child: GestureDetector(
+          onTap: widget.onTap,
+          child: Draggable(
+            childWhenDragging: Container(),
+            feedback: Material(
+              color: Colors.transparent,
+              child: StickyCard(
+                sticky: widget.sticky,
+              ),
             ),
-          ),
-          onDragStarted: () {
-            setState(() {
-              isDragging = true;
-            });
-          },
-          onDragEnd: (dragDetails) async {
-            await widget.updatePosition?.call(dragDetails.offset, widget.sticky.id);
-            setState(() {
-              isDragging = false;
-            });
-          },
-          child: Opacity(
-            opacity: isDragging ? 0 : 1,
-            child: StickyCard(
-              sticky: widget.sticky,
+            onDragStarted: () {
+              setState(() {
+                isDragging = true;
+              });
+            },
+            onDragEnd: (dragDetails) async {
+              final pane = ref.read(panPositionProvider);
+              await widget.updatePosition?.call(dragDetails.offset - pane, widget.sticky.id);
+              setState(() {
+                isDragging = false;
+              });
+            },
+            child: Opacity(
+              opacity: isDragging ? 0 : 1,
+              child: StickyCard(
+                sticky: widget.sticky,
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
