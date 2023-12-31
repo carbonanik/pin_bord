@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
 import 'package:pin_bord/provider/note_color_provider.dart';
+import 'package:pin_bord/provider/pan_position_provider.dart';
 import 'package:pin_bord/provider/sticky_local_provider.dart';
 import 'package:pin_bord/provider/zindex_provider.dart';
 import 'package:uuid/v4.dart';
@@ -25,6 +26,18 @@ class StickyNotifier extends ChangeNotifier {
   final List<Sticky> _notes = [];
 
   UnmodifiableListView<Sticky> get notes => UnmodifiableListView(_notes);
+
+  Iterable<Sticky> inScreen({required Size screenSize, Offset cacheExtend = const Offset(-300, -200)}) {
+    final panPosition = ref.watch(panPositionProvider);
+
+    return notes.where((element) {
+      final elementOffset = (element.position ?? Offset.zero) + panPosition;
+      return Rect.fromPoints(
+        cacheExtend,
+        Offset(screenSize.width, screenSize.height),
+      ).contains(elementOffset);
+    });
+  }
 
   Future<void> createSticky(CreateSticky createSticky) async {
     final id = const UuidV4().generate();

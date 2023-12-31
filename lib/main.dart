@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_bord/data/datasource/local/init_hive.dart';
+import 'package:pin_bord/presentation/pages/sticky_2d_scroll.dart';
 import 'package:pin_bord/routes/app_router.dart';
 
 
@@ -25,9 +28,16 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.greenAccent,
         )
       ),
+      // scrollBehavior: const MaterialScrollBehavior().copyWith(
+      //   dragDevices: PointerDeviceKind.values.toSet(),
+      // ),
     );
     // return MaterialApp(
-    //   home: StickyStackPage(),
+    //   scrollBehavior: const MaterialScrollBehavior().copyWith(
+    //     // Mouse dragging enabled for this demo
+    //     dragDevices: PointerDeviceKind.values.toSet(),
+    //   ),
+    //   home: const Sticky2DScrollPage(),
     // );
   }
 }
