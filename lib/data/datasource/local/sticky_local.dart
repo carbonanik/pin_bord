@@ -9,6 +9,8 @@ abstract class StickyLocal {
 
   Future<void> addSticky(String id, Sticky sticky);
 
+  Future<void> addStickyMany(Iterable<Sticky> stickies);
+
   Future<void> removeSticky(String id);
 
   Future<void> updateSticky(String id, Sticky sticky);

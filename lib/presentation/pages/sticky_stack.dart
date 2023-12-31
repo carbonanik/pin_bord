@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
 import 'package:pin_bord/presentation/widget/sticky_draggable.dart';
+import 'package:pin_bord/provider/is_test_provider.dart';
 import 'package:pin_bord/provider/pan_position_provider.dart';
 import 'package:pin_bord/provider/sticky_provider.dart';
 import 'package:pin_bord/routes/app_router.dart';
@@ -32,25 +33,28 @@ class _StickyStackPageState extends State<StickyStackPage> {
         builder: (context, ref, child) {
           final notifier = ref.watch(stickyProvider);
           final panPosition = ref.watch(panPositionProvider);
+          final widgets = notifier.notes
+              .where(
+                (element) {
+                  final elementOffset = (element.position ?? Offset.zero) + panPosition;
+                  return Rect.fromPoints(
+                    const Offset(-300, -200),
+                    Offset(screenSize.width, screenSize.height),
+                  ).contains(elementOffset);
+                },
+              )
+              .map(
+                (sticky) => StickyDraggable(
+                  sticky: sticky,
+                  onTap: () async {
 
-          // const count = 400;
-          // final lastPos = const Offset(count * -100, count * -100) + Offset(1000, 1000);
-          // final generated = List.generate(
-          //   count,
-          //   (index) {
-          //     final pos = lastPos - Offset(index * -100, index * -100);
-          //     return Sticky(
-          //       id: index.toString(),
-          //       title: "Sticky: $index",
-          //       content: "This is a note \n $pos",
-          //       zIndex: count - index,
-          //       createdAt: DateTime.now(),
-          //       updatedAt: DateTime.now(),
-          //       position: pos,
-          //     );
-          //   },
-          // );
-
+                    await notifier.itemToTop(sticky.id);
+                  },
+                  updatePosition: (offset, id) async => await notifier.updatePosition(offset, id),
+                ),
+              )
+              .toList();
+          widgets.sort((a, b) => a.sticky.zIndex.compareTo(b.sticky.zIndex));
           return Stack(
             children: [
               Positioned.fill(
@@ -63,21 +67,17 @@ class _StickyStackPageState extends State<StickyStackPage> {
                   ),
                 ),
               ),
-              ...notifier.notes.where((element) {
-                final elementOffset = (element.position ?? Offset.zero) + panPosition;
-                return Rect.fromPoints(
-                  const Offset(-300, -200),
-                  Offset(screenSize.width, screenSize.height),
-                ).contains(elementOffset);
-              }).map(
-                (sticky) => StickyDraggable(
-                  sticky: sticky,
-                  onTap: () async {
-                    await notifier.itemToTop(sticky.id);
+              Positioned(
+                bottom: 0,
+                left: 0,
+                child: FilledButton(
+                  onPressed: () {
+                    ref.read(isTestProvider.notifier).toggle();
                   },
-                  updatePosition: (offset, id) async => await notifier.updatePosition(offset, id),
+                  child: const Text('Test with 1000 stickies'),
                 ),
               ),
+              ...widgets,
             ],
           );
         },

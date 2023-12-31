@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
+import 'package:pin_bord/provider/is_test_provider.dart';
 import 'package:pin_bord/provider/note_color_provider.dart';
 import 'package:pin_bord/provider/pan_position_provider.dart';
 import 'package:pin_bord/provider/sticky_local_provider.dart';
@@ -16,8 +17,33 @@ class StickyNotifier extends ChangeNotifier {
 
   void _init() async {
     if ((await ref.read(stickyLocalProvider).getStickies()).isEmpty) {
-      await ref.read(stickyLocalProvider).addSticky(welcomeNote.id, welcomeNote);
-      await ref.read(zIndexCounterProvider).updateZIndex(4);
+      if (ref.read(isTestProvider)) {
+        const count = 1001;
+        final lastPos = const Offset(count * -100, count * -100) + const Offset(1000, 1000);
+        final generated = List.generate(
+          count,
+          (index) {
+            final pos = lastPos - Offset(index * -100, index * -100);
+            return Sticky(
+              id: index.toString(),
+              title: "Sticky: $index",
+              content: "This is a note \n $pos",
+              zIndex: index,
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+              position: pos,
+              color: ref.read(colorsProvider)[index % ref.read(colorsProvider).length],
+            );
+          },
+        );
+
+        await ref.read(stickyLocalProvider).addStickyMany(generated);
+
+        await ref.read(zIndexCounterProvider).updateZIndex(count);
+      } else {
+        await ref.read(stickyLocalProvider).addSticky(welcomeNote.id, welcomeNote);
+        await ref.read(zIndexCounterProvider).updateZIndex(1);
+      }
     }
     await __updateList();
   }
@@ -77,6 +103,7 @@ class StickyNotifier extends ChangeNotifier {
   }
 
   Future<void> itemToTop(String id) async {
+    print("before ${getSticky(id)?.zIndex}");
     final sticky = await ref.read(stickyLocalProvider).getSticky(id);
     if (sticky == null) return;
 
@@ -84,8 +111,8 @@ class StickyNotifier extends ChangeNotifier {
     final stickyUpdate = sticky.copyWith(zIndex: currentZIndex + 1);
     await ref.read(stickyLocalProvider).updateSticky(id, stickyUpdate);
     await ref.read(zIndexCounterProvider).updateZIndex(currentZIndex + 1);
-
     await __updateList();
+    print("after ${getSticky(id)?.zIndex}");
   }
 
   Future<void> updatePosition(Offset offset, String id) async {
@@ -97,7 +124,7 @@ class StickyNotifier extends ChangeNotifier {
 
   Future<void> __updateList() async {
     final ns = await ref.read(stickyLocalProvider).getStickies();
-    ns.sort((a, b) => a.zIndex.compareTo(b.zIndex));
+    // ns.sort((a, b) => a.zIndex.compareTo(b.zIndex));
     _notes.clear();
     _notes.addAll(ns);
     notifyListeners();
@@ -117,10 +144,3 @@ final Sticky welcomeNote = Sticky(
   updatedAt: DateTime.now(),
   color: unselectedColor,
 );
-
-// final colors = [
-//   Colors.red,
-//   Colors.green,
-//   Colors.blue,
-//   Colors.yellow,
-// ];
