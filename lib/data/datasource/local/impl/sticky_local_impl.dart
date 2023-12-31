@@ -24,6 +24,12 @@ class StickyLocalImpl implements StickyLocal {
   }
 
   @override
+  Future<void> addStickyMany(Iterable<Sticky> stickies) async {
+    final box = Hive.box<Sticky>(stickyBox);
+    await box.putAll({for (var sticky in stickies) sticky.id: sticky});
+  }
+
+  @override
   Future<void> removeSticky(String id) async {
     final box = Hive.box<Sticky>(stickyBox);
     await box.delete(id);

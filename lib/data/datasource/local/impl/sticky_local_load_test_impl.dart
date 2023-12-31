@@ -2,32 +2,13 @@ import 'dart:ui';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pin_bord/data/datasource/local/constant.dart';
+import 'package:pin_bord/data/datasource/local/impl/zindex_counter_impl.dart';
 import 'package:pin_bord/data/datasource/local/sticky_local.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
 
 class StickyLocalLoadTestImpl implements StickyLocal {
   @override
   Future<List<Sticky>> getStickies() async {
-
-    const count = 400;
-    final lastPos = const Offset(count * -100, count * -100) + Offset(1000, 1000);
-    final generated = List.generate(
-      count,
-          (index) {
-
-        final pos = lastPos - Offset(index * -100, index * -100);
-        return Sticky(
-          id: index.toString(),
-          title: "Sticky: $index",
-          content: "This is a note \n $pos",
-          zIndex: count - index,
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-          position: pos,
-        );
-      },
-    );
-
     final box = Hive.box<Sticky>(stickyLoadTestBox);
     return box.values.toList();
   }
@@ -42,6 +23,12 @@ class StickyLocalLoadTestImpl implements StickyLocal {
   Future<void> addSticky(String id, Sticky sticky) async {
     final box = Hive.box<Sticky>(stickyLoadTestBox);
     await box.put(sticky.id, sticky);
+  }
+
+  @override
+  Future<void> addStickyMany(Iterable<Sticky> stickies) async {
+    final box = Hive.box<Sticky>(stickyLoadTestBox);
+    await box.putAll({for (var sticky in stickies) sticky.id: sticky});
   }
 
   @override
