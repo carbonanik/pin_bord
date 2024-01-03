@@ -35,7 +35,7 @@ class _StickyDraggableState extends State<StickyDraggable> {
         left: _x + panPosition.dx,
         top: _y + panPosition.dy,
         child: GestureDetector(
-          onTap: () async => await notifier.itemToTop(widget.sticky.id),
+          onTap: () => notifier.updateZIndex(widget.sticky.id),
           child: Draggable(
             feedback: Material(
               color: Colors.transparent,
@@ -44,9 +44,9 @@ class _StickyDraggableState extends State<StickyDraggable> {
               ),
             ),
             onDragStarted: () => setState(() => isDragging = true),
-            onDragEnd: (dragDetails) async {
+            onDragEnd: (dragDetails) {
               final pane = ref.read(panPositionProvider);
-              await notifier.updatePosition(dragDetails.offset - pane, widget.sticky.id);
+              notifier.updatePosition(dragDetails.offset - pane, widget.sticky.id);
               setState(() => isDragging = false);
             },
             child: Opacity(

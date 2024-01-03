@@ -24,7 +24,7 @@ class StickyAdapter extends TypeAdapter<_$StickyImpl> {
       updatedAt: fields[4] as DateTime?,
       zIndex: fields[5] as int,
       color: fields[6] as Color?,
-      position: fields[7] as Offset?,
+      position: fields[7] as Offset,
       size: fields[8] as Size?,
     );
   }
@@ -81,8 +81,8 @@ _$StickyImpl _$$StickyImplFromJson(Map<String, dynamic> json) => _$StickyImpl(
       zIndex: json['zIndex'] as int,
       color: _$JsonConverterFromJson<Map<String, dynamic>, Color>(
           json['color'], const ColorJsonConverter().fromJson),
-      position: _$JsonConverterFromJson<Map<String, dynamic>, Offset>(
-          json['position'], const OffsetJsonConverter().fromJson),
+      position: const OffsetJsonConverter()
+          .fromJson(json['position'] as Map<String, dynamic>),
       size: _$JsonConverterFromJson<Map<String, dynamic>, Size>(
           json['size'], const SizeJsonConverter().fromJson),
     );
@@ -97,8 +97,7 @@ Map<String, dynamic> _$$StickyImplToJson(_$StickyImpl instance) =>
       'zIndex': instance.zIndex,
       'color': _$JsonConverterToJson<Map<String, dynamic>, Color>(
           instance.color, const ColorJsonConverter().toJson),
-      'position': _$JsonConverterToJson<Map<String, dynamic>, Offset>(
-          instance.position, const OffsetJsonConverter().toJson),
+      'position': const OffsetJsonConverter().toJson(instance.position),
       'size': _$JsonConverterToJson<Map<String, dynamic>, Size>(
           instance.size, const SizeJsonConverter().toJson),
     };

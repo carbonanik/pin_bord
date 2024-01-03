@@ -1,12 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pin_bord/presentation/widget/mini_map.dart';
 import 'package:pin_bord/presentation/widget/sticky_draggable.dart';
 import 'package:pin_bord/provider/in_window_sticky_provider.dart';
 import 'package:pin_bord/provider/is_test_provider.dart';
 import 'package:pin_bord/provider/pan_position_provider.dart';
-import 'package:pin_bord/provider/sticky_provider.dart';
 import 'package:pin_bord/routes/app_router.dart';
+import 'package:pin_bord/util/responsive.dart';
 
 @RoutePage()
 class StickyStackPage extends StatefulWidget {
@@ -39,9 +40,7 @@ class _StickyStackPageState extends State<StickyStackPage> {
               Positioned.fill(
                 child: GestureDetector(
                   onPanUpdate: (details) => ref.read(panPositionProvider.notifier).state += details.delta,
-                  child: Container(
-                    color: Colors.transparent,
-                  ),
+                  child: Container(color: Colors.transparent),
                 ),
               ),
               Positioned(
@@ -53,6 +52,10 @@ class _StickyStackPageState extends State<StickyStackPage> {
                 ),
               ),
               ...inWindow,
+              SizedBox(
+                width: screenSize.width,
+                height: screenSize.height,
+              ),
             ],
           );
         },

@@ -23,7 +23,7 @@ class CreateNotePage extends ConsumerWidget {
         contentTextController: contentTextController,
         titleTextController: titleTextController,
         create: true,
-        onActionTap: () async {
+        onActionTap: () {
           if (titleTextController.text.isEmpty || contentTextController.text.isEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -35,7 +35,7 @@ class CreateNotePage extends ConsumerWidget {
             return;
           }
           final notifier = ref.read(stickyProvider.notifier);
-          await notifier.createSticky(
+          notifier.createSticky(
             CreateSticky(
               title: titleTextController.text,
               content: contentTextController.text,
@@ -43,7 +43,6 @@ class CreateNotePage extends ConsumerWidget {
             ),
           );
 
-          // ignore: use_build_context_synchronously
           AutoRouter.of(context).pop();
         },
       ),

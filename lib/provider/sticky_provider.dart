@@ -1,11 +1,9 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
 import 'package:pin_bord/provider/is_test_provider.dart';
 import 'package:pin_bord/provider/note_color_provider.dart';
-import 'package:pin_bord/provider/pan_position_provider.dart';
 import 'package:pin_bord/provider/sticky_local_provider.dart';
 import 'package:pin_bord/provider/zindex_provider.dart';
 import 'package:uuid/v4.dart';
@@ -16,87 +14,102 @@ class StickyNotifier extends ChangeNotifier {
   }
 
   void _init() async {
-    if ((await ref.read(stickyLocalProvider).getStickies()).isEmpty) {
+    if ((ref.read(stickyLocalProvider).getStickies()).isEmpty) {
       if (ref.read(isTestProvider)) {
         final generated = generatedTestSticky(ref: ref);
-        await ref.read(stickyLocalProvider).addStickyMany(generated);
-        await ref.read(zIndexCounterProvider).updateZIndex(generated.length);
+        _notes.addAll(generated);
+        _maxZIndex = generated.length;
       } else {
-        await ref.read(stickyLocalProvider).addSticky(welcomeNote.id, welcomeNote);
-        await ref.read(zIndexCounterProvider).updateZIndex(1);
+        _notes.add(welcomeNote);
+        _maxZIndex = 1;
       }
+      // add to local storage
+      await ref.read(stickyLocalProvider).addStickyMany(_notes);
+      await ref.read(zIndexCounterProvider).updateZIndex(_maxZIndex);
+    } else {
+      _notes.addAll(ref.read(stickyLocalProvider).getStickies());
     }
-    await __updateList();
+    __updateList();
   }
 
   final Ref ref;
   final List<Sticky> _notes = [];
+  final List<Sticky> _trash = [];
+  final List<Sticky> _dirty = [];
+
+  int _maxZIndex = 0;
 
   UnmodifiableListView<Sticky> get notes => UnmodifiableListView(_notes);
-
-  Future<void> createSticky(CreateSticky createSticky) async {
-    final id = const UuidV4().generate();
-
-    final zIndex = await ref.read(zIndexCounterProvider).getZIndex();
-    final sticky = Sticky.initial().copyWith(
-      id: id,
-      title: createSticky.title,
-      content: createSticky.content,
-      color: createSticky.color,
-      zIndex: zIndex + 1,
-    );
-    await ref.read(stickyLocalProvider).addSticky(sticky.id, sticky);
-    await ref.read(zIndexCounterProvider).updateZIndex(zIndex + 1);
-    await __updateList();
-  }
-
-  Future<void> removeSticky(String id) async {
-    await ref.read(stickyLocalProvider).removeSticky(id);
-    await __updateList();
-  }
-
-  Future<void> updateSticky(UpdateSticky sticky, String id) async {
-    final oldSticky = await ref.read(stickyLocalProvider).getSticky(id);
-    if (oldSticky == null) return;
-    final updated = oldSticky.copyWith(
-      title: sticky.title,
-      content: sticky.content,
-      color: sticky.color,
-    );
-    await ref.read(stickyLocalProvider).updateSticky(id, updated);
-    await __updateList();
-  }
 
   Sticky? getSticky(String id) {
     return _notes.firstWhere((element) => element.id == id);
   }
 
-  Future<void> itemToTop(String id) async {
-    print("before ${getSticky(id)?.zIndex}");
-    final sticky = await ref.read(stickyLocalProvider).getSticky(id);
-    if (sticky == null) return;
-
-    final currentZIndex = await ref.read(zIndexCounterProvider).getZIndex();
-    final stickyUpdate = sticky.copyWith(zIndex: currentZIndex + 1);
-    await ref.read(stickyLocalProvider).updateSticky(id, stickyUpdate);
-    await ref.read(zIndexCounterProvider).updateZIndex(currentZIndex + 1);
-    await __updateList();
-    print("after ${getSticky(id)?.zIndex}");
+  void createSticky(CreateSticky createSticky) {
+    final id = const UuidV4().generate();
+    final sticky = Sticky.empty().copyWith(
+      id: id,
+      title: createSticky.title,
+      content: createSticky.content,
+      color: createSticky.color,
+      zIndex: ++_maxZIndex,
+    );
+    _notes.add(sticky);
+    _dirty.add(sticky);
+    __updateList();
   }
 
-  Future<void> updatePosition(Offset offset, String id) async {
-    final sticky = await ref.read(stickyLocalProvider).getSticky(id);
-    if (sticky == null) return;
-    await ref.read(stickyLocalProvider).updateSticky(id, sticky.copyWith(position: offset));
-    await __updateList();
+  void removeSticky(String id) {
+    _trash.add(_notes.firstWhere((element) => element.id == id));
+    _notes.removeWhere((element) => element.id == id);
+    __updateList();
   }
 
-  Future<void> __updateList() async {
-    final ns = await ref.read(stickyLocalProvider).getStickies();
-    // ns.sort((a, b) => a.zIndex.compareTo(b.zIndex));
-    _notes.clear();
-    _notes.addAll(ns);
+  void updateSticky(UpdateSticky update, String id) {
+    final sticky = getSticky(id);
+    if (sticky == null) return;
+
+    final updated = sticky.update(update);
+    _notes[_notes.indexOf(sticky)] = updated;
+    _dirty.add(updated);
+
+    __updateList();
+  }
+
+  void updateZIndex(String id) {
+    final sticky = getSticky(id);
+    if (sticky == null) return;
+
+    final updated = sticky.copyWith(zIndex: ++_maxZIndex);
+    _notes[_notes.indexOf(sticky)] = updated;
+    _dirty.add(updated);
+
+    __updateList();
+  }
+
+  void updatePosition(Offset offset, String id) {
+    final sticky = getSticky(id);
+    if (sticky == null) return;
+
+    final updated = sticky.copyWith(position: offset);
+    _notes[_notes.indexOf(sticky)] = updated;
+    _dirty.add(updated);
+
+    __updateList();
+  }
+
+  void __updateList() async {
     notifyListeners();
+    if (_dirty.isNotEmpty) {
+      await ref.read(stickyLocalProvider).addStickyMany(_dirty);
+      _dirty.clear();
+    }
+    while (_trash.isNotEmpty) {
+      await ref.read(stickyLocalProvider).removeSticky(_trash.removeLast().id);
+    }
+    if (await ref.read(zIndexCounterProvider).getZIndex() != _maxZIndex) {
+      ref.read(zIndexCounterProvider).updateZIndex(_maxZIndex);
+    }
   }
 }
 
@@ -104,7 +117,7 @@ final stickyProvider = ChangeNotifierProvider<StickyNotifier>((ref) {
   return StickyNotifier(ref);
 });
 
-final Sticky welcomeNote = Sticky(
+final Sticky welcomeNote = Sticky.empty().copyWith(
   id: const UuidV4().generate(),
   zIndex: 4,
   title: 'Welcome to Pin Bord!',
@@ -120,8 +133,8 @@ List<Sticky> generatedTestSticky({required Ref ref, int count = 1001}) {
     count,
     (index) {
       final pos = lastPos - Offset(index * -100, index * -100);
-      return Sticky(
-        id: index.toString(),
+      return Sticky.empty().copyWith(
+        id: const UuidV4().generate(),
         title: "Sticky: $index",
         content: "This is a note \n $pos",
         zIndex: index,
