@@ -12,4 +12,5 @@ Future<void> initHiveDriver() async {
   await Hive.openBox<Sticky>(stickyBox);
   await Hive.openBox<Sticky>(stickyLoadTestBox);
   await Hive.openBox<int>(zIndexCounterBox);
+  await Hive.openBox<int>(zIndexCounterLoadTestBox);
 }

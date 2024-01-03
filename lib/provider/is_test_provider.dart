@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_bord/provider/pan_position_provider.dart';
 import 'package:pin_bord/provider/sticky_local_provider.dart';
 import 'package:pin_bord/provider/sticky_provider.dart';
+import 'package:pin_bord/provider/zindex_provider.dart';
 
 class IsTestNotifier extends StateNotifier<bool> {
   Ref ref;
@@ -12,6 +13,7 @@ class IsTestNotifier extends StateNotifier<bool> {
     ref.invalidate(panPositionProvider);
     ref.invalidate(stickyProvider);
     ref.invalidate(stickyLocalProvider);
+    ref.invalidate(zIndexCounterProvider);
     state = !state;
   }
 }
