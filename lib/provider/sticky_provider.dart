@@ -28,6 +28,7 @@ class StickyNotifier extends ChangeNotifier {
       await ref.read(zIndexCounterProvider).updateZIndex(_maxZIndex);
     } else {
       _notes.addAll(ref.read(stickyLocalProvider).getStickies());
+      _maxZIndex = ref.read(zIndexCounterProvider).getZIndex();
     }
     __updateList();
   }

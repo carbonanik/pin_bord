@@ -58,22 +58,6 @@ class StickyCard extends ConsumerWidget {
             ],
           ),
         ),
-        // Positioned(
-        //   top: 0,
-        //   right: 35,
-        //   child: GestureDetector(
-        //     onTap: () async {
-        //       await ref.read(stickyProvider.notifier).removeSticky(sticky.id);
-        //     },
-        //     child: const Padding(
-        //       padding: EdgeInsets.all(10.0),
-        //       child: Icon(
-        //         size: 20,
-        //         Icons.delete,
-        //       ),
-        //     ),
-        //   ),
-        // ),
         Positioned(
           top: 0,
           right: 35,
