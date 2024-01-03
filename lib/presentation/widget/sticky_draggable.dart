@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
 import 'package:pin_bord/provider/pan_position_provider.dart';
+import 'package:pin_bord/provider/sticky_provider.dart';
 import 'sticky_card.dart';
 
 class StickyDraggable extends StatefulWidget {
   final Sticky sticky;
-  final VoidCallback? onTap;
-  final Future<void> Function(Offset offset, String id)? updatePosition;
 
   const StickyDraggable({
     Key? key,
     required this.sticky,
-    this.onTap,
-    this.updatePosition,
   }) : super(key: key);
 
   @override
@@ -32,30 +29,25 @@ class _StickyDraggableState extends State<StickyDraggable> {
     _y = widget.sticky.position?.dy ?? size.height / 10;
     return Consumer(builder: (context, ref, child) {
       final panPosition = ref.watch(panPositionProvider);
+      final notifier = ref.watch(stickyProvider);
+
       return Positioned(
         left: _x + panPosition.dx,
         top: _y + panPosition.dy,
         child: GestureDetector(
-          onTap: widget.onTap,
+          onTap: () => notifier.updateZIndex(widget.sticky.id),
           child: Draggable(
-            childWhenDragging: Container(),
             feedback: Material(
               color: Colors.transparent,
               child: StickyCard(
                 sticky: widget.sticky,
               ),
             ),
-            onDragStarted: () {
-              setState(() {
-                isDragging = true;
-              });
-            },
-            onDragEnd: (dragDetails) async {
+            onDragStarted: () => setState(() => isDragging = true),
+            onDragEnd: (dragDetails) {
               final pane = ref.read(panPositionProvider);
-              await widget.updatePosition?.call(dragDetails.offset - pane, widget.sticky.id);
-              setState(() {
-                isDragging = false;
-              });
+              notifier.updatePosition(dragDetails.offset - pane, widget.sticky.id);
+              setState(() => isDragging = false);
             },
             child: Opacity(
               opacity: isDragging ? 0 : 1,

@@ -30,44 +30,34 @@ class UpdateNote extends ConsumerWidget {
     });
 
     return Scaffold(
-      // backgroundColor: ref.watch(selectedColorProvider),
       body: CreateOrUpdateSticky(
-          contentTextController: contentTextController,
-          titleTextController: titleTextController,
-          create: false,
-          onActionTap: () async {
-            if (titleTextController.text.isEmpty || contentTextController.text.isEmpty) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    "Title and content cannot be empty",
-                  ),
-                ),
-              );
-              return;
-            }
-            final notifier = ref.read(stickyProvider.notifier);
-
-            await notifier.updateSticky(
-              UpdateSticky(
-                title: titleTextController.text,
-                content: contentTextController.text,
-                color: ref.read(selectedColorProvider),
-              ),
-              updateId,
+        contentTextController: contentTextController,
+        titleTextController: titleTextController,
+        create: false,
+        onActionTap: () {
+          if (titleTextController.text.isEmpty || contentTextController.text.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Title and content cannot be empty")),
             );
-
-            // ignore: use_build_context_synchronously
-            AutoRouter.of(context).pop();
-          },
-          onDeleteTap: () async {
-            final notifier = ref.read(stickyProvider.notifier);
-
-            await notifier.removeSticky(updateId);
-
-            // ignore: use_build_context_synchronously
-            AutoRouter.of(context).pop();
-          }),
+            return;
+          }
+          final notifier = ref.read(stickyProvider.notifier);
+          notifier.updateSticky(
+            UpdateSticky(
+              title: titleTextController.text,
+              content: contentTextController.text,
+              color: ref.read(selectedColorProvider),
+            ),
+            updateId,
+          );
+          AutoRouter.of(context).pop();
+        },
+        onDeleteTap: () {
+          final notifier = ref.read(stickyProvider.notifier);
+          notifier.removeSticky(updateId);
+          AutoRouter.of(context).pop();
+        },
+      ),
     );
   }
 }

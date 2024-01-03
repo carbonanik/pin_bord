@@ -9,10 +9,10 @@ class IsTestNotifier extends StateNotifier<bool> {
   IsTestNotifier(super.state, this.ref);
 
   void toggle() {
-    state = !state;
     ref.invalidate(panPositionProvider);
     ref.invalidate(stickyProvider);
     ref.invalidate(stickyLocalProvider);
+    state = !state;
   }
 }
 

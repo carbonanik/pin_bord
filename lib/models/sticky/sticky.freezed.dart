@@ -37,7 +37,7 @@ mixin _$Sticky {
   Color? get color => throw _privateConstructorUsedError;
   @HiveField(7)
   @OffsetJsonConverter()
-  Offset? get position => throw _privateConstructorUsedError;
+  Offset get position => throw _privateConstructorUsedError;
   @HiveField(8)
   @SizeJsonConverter()
   Size? get size => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $StickyCopyWith<$Res> {
       @HiveField(4) DateTime? updatedAt,
       @HiveField(5) int zIndex,
       @HiveField(6) @ColorJsonConverter() Color? color,
-      @HiveField(7) @OffsetJsonConverter() Offset? position,
+      @HiveField(7) @OffsetJsonConverter() Offset position,
       @HiveField(8) @SizeJsonConverter() Size? size});
 }
 
@@ -84,7 +84,7 @@ class _$StickyCopyWithImpl<$Res, $Val extends Sticky>
     Object? updatedAt = freezed,
     Object? zIndex = null,
     Object? color = freezed,
-    Object? position = freezed,
+    Object? position = null,
     Object? size = freezed,
   }) {
     return _then(_value.copyWith(
@@ -116,10 +116,10 @@ class _$StickyCopyWithImpl<$Res, $Val extends Sticky>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as Color?,
-      position: freezed == position
+      position: null == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
-              as Offset?,
+              as Offset,
       size: freezed == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
@@ -143,7 +143,7 @@ abstract class _$$StickyImplCopyWith<$Res> implements $StickyCopyWith<$Res> {
       @HiveField(4) DateTime? updatedAt,
       @HiveField(5) int zIndex,
       @HiveField(6) @ColorJsonConverter() Color? color,
-      @HiveField(7) @OffsetJsonConverter() Offset? position,
+      @HiveField(7) @OffsetJsonConverter() Offset position,
       @HiveField(8) @SizeJsonConverter() Size? size});
 }
 
@@ -165,7 +165,7 @@ class __$$StickyImplCopyWithImpl<$Res>
     Object? updatedAt = freezed,
     Object? zIndex = null,
     Object? color = freezed,
-    Object? position = freezed,
+    Object? position = null,
     Object? size = freezed,
   }) {
     return _then(_$StickyImpl(
@@ -197,10 +197,10 @@ class __$$StickyImplCopyWithImpl<$Res>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as Color?,
-      position: freezed == position
+      position: null == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
-              as Offset?,
+              as Offset,
       size: freezed == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
@@ -221,7 +221,7 @@ class _$StickyImpl extends _Sticky {
       @HiveField(4) required this.updatedAt,
       @HiveField(5) required this.zIndex,
       @HiveField(6) @ColorJsonConverter() this.color,
-      @HiveField(7) @OffsetJsonConverter() this.position,
+      @HiveField(7) @OffsetJsonConverter() required this.position,
       @HiveField(8) @SizeJsonConverter() this.size})
       : super._();
 
@@ -253,7 +253,7 @@ class _$StickyImpl extends _Sticky {
   @override
   @HiveField(7)
   @OffsetJsonConverter()
-  final Offset? position;
+  final Offset position;
   @override
   @HiveField(8)
   @SizeJsonConverter()
@@ -311,7 +311,7 @@ abstract class _Sticky extends Sticky {
       @HiveField(4) required final DateTime? updatedAt,
       @HiveField(5) required final int zIndex,
       @HiveField(6) @ColorJsonConverter() final Color? color,
-      @HiveField(7) @OffsetJsonConverter() final Offset? position,
+      @HiveField(7) @OffsetJsonConverter() required final Offset position,
       @HiveField(8) @SizeJsonConverter() final Size? size}) = _$StickyImpl;
   _Sticky._() : super._();
 
@@ -342,7 +342,7 @@ abstract class _Sticky extends Sticky {
   @override
   @HiveField(7)
   @OffsetJsonConverter()
-  Offset? get position;
+  Offset get position;
   @override
   @HiveField(8)
   @SizeJsonConverter()

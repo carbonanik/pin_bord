@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 import 'package:pin_bord/provider/note_color_provider.dart';
-import 'package:pin_bord/provider/sticky_provider.dart';
 import 'package:pin_bord/util/json_converters.dart';
 
 part 'sticky.freezed.dart';
@@ -24,13 +21,13 @@ abstract class Sticky extends HiveObject with _$Sticky {
     @HiveField(4) required final DateTime? updatedAt,
     @HiveField(5) required final int zIndex,
     @HiveField(6) @ColorJsonConverter() final Color? color,
-    @HiveField(7) @OffsetJsonConverter() final Offset? position,
+    @HiveField(7) @OffsetJsonConverter() required final Offset position,
     @HiveField(8) @SizeJsonConverter() final Size? size,
   }) = _Sticky;
 
   factory Sticky.fromJson(Map<String, dynamic> json) => _$StickyFromJson(json);
 
-  factory Sticky.initial() {
+  factory Sticky.empty() {
     return Sticky(
       id: "",
       title: '',
@@ -42,6 +39,15 @@ abstract class Sticky extends HiveObject with _$Sticky {
       position: const Offset(250, 250),
       size: const Size(0, 0),
     );
+  }
+
+  Sticky update(UpdateSticky update) {
+    final updated = copyWith(
+      title: update.title,
+      content: update.content,
+      color: update.color,
+    );
+    return updated;
   }
 }
 
