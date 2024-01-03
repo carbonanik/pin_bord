@@ -18,28 +18,9 @@ class StickyNotifier extends ChangeNotifier {
   void _init() async {
     if ((await ref.read(stickyLocalProvider).getStickies()).isEmpty) {
       if (ref.read(isTestProvider)) {
-        const count = 1001;
-        final lastPos = const Offset(count * -100, count * -100) + const Offset(1000, 1000);
-        final generated = List.generate(
-          count,
-          (index) {
-            final pos = lastPos - Offset(index * -100, index * -100);
-            return Sticky(
-              id: index.toString(),
-              title: "Sticky: $index",
-              content: "This is a note \n $pos",
-              zIndex: index,
-              createdAt: DateTime.now(),
-              updatedAt: DateTime.now(),
-              position: pos,
-              color: ref.read(colorsProvider)[index % ref.read(colorsProvider).length],
-            );
-          },
-        );
-
+        final generated = generatedTestSticky(ref: ref);
         await ref.read(stickyLocalProvider).addStickyMany(generated);
-
-        await ref.read(zIndexCounterProvider).updateZIndex(count);
+        await ref.read(zIndexCounterProvider).updateZIndex(generated.length);
       } else {
         await ref.read(stickyLocalProvider).addSticky(welcomeNote.id, welcomeNote);
         await ref.read(zIndexCounterProvider).updateZIndex(1);
@@ -52,18 +33,6 @@ class StickyNotifier extends ChangeNotifier {
   final List<Sticky> _notes = [];
 
   UnmodifiableListView<Sticky> get notes => UnmodifiableListView(_notes);
-
-  Iterable<Sticky> inScreen({required Size screenSize, Offset cacheExtend = const Offset(-300, -200)}) {
-    final panPosition = ref.watch(panPositionProvider);
-
-    return notes.where((element) {
-      final elementOffset = (element.position ?? Offset.zero) + panPosition;
-      return Rect.fromPoints(
-        cacheExtend,
-        Offset(screenSize.width, screenSize.height),
-      ).contains(elementOffset);
-    });
-  }
 
   Future<void> createSticky(CreateSticky createSticky) async {
     final id = const UuidV4().generate();
@@ -144,3 +113,24 @@ final Sticky welcomeNote = Sticky(
   updatedAt: DateTime.now(),
   color: unselectedColor,
 );
+
+List<Sticky> generatedTestSticky({required Ref ref, int count = 1001}) {
+  final lastPos = Offset(count * -100, count * -100) + const Offset(1000, 1000);
+  final generated = List.generate(
+    count,
+    (index) {
+      final pos = lastPos - Offset(index * -100, index * -100);
+      return Sticky(
+        id: index.toString(),
+        title: "Sticky: $index",
+        content: "This is a note \n $pos",
+        zIndex: index,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        position: pos,
+        color: ref.read(colorsProvider)[index % ref.read(colorsProvider).length],
+      );
+    },
+  );
+  return generated;
+}
