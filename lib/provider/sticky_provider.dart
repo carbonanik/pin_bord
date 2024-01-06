@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
 import 'package:pin_bord/provider/is_test_provider.dart';
 import 'package:pin_bord/provider/note_color_provider.dart';
+import 'package:pin_bord/provider/screen_size_provider.dart';
 import 'package:pin_bord/provider/sticky_local_provider.dart';
 import 'package:pin_bord/provider/zindex_provider.dart';
 import 'package:uuid/v4.dart';
@@ -20,7 +21,7 @@ class StickyNotifier extends ChangeNotifier {
         _notes.addAll(generated);
         _maxZIndex = generated.length;
       } else {
-        _notes.add(welcomeNote);
+        _notes.add(welcomeNote(ref.read(screenSizeProvider)));
         _maxZIndex = 1;
       }
       // add to local storage
@@ -108,7 +109,7 @@ class StickyNotifier extends ChangeNotifier {
     while (_trash.isNotEmpty) {
       await ref.read(stickyLocalProvider).removeSticky(_trash.removeLast().id);
     }
-    if (await ref.read(zIndexCounterProvider).getZIndex() != _maxZIndex) {
+    if (ref.read(zIndexCounterProvider).getZIndex() != _maxZIndex) {
       ref.read(zIndexCounterProvider).updateZIndex(_maxZIndex);
     }
   }
@@ -118,7 +119,7 @@ final stickyProvider = ChangeNotifierProvider<StickyNotifier>((ref) {
   return StickyNotifier(ref);
 });
 
-final Sticky welcomeNote = Sticky.empty().copyWith(
+Sticky welcomeNote(Size screenSize) => Sticky.empty().copyWith(
   id: const UuidV4().generate(),
   zIndex: 4,
   title: 'Welcome to Pin Bord!',
@@ -126,6 +127,7 @@ final Sticky welcomeNote = Sticky.empty().copyWith(
   createdAt: DateTime.now(),
   updatedAt: DateTime.now(),
   color: unselectedColor,
+  position: Offset(screenSize.width / 2 - 150, screenSize.height / 10),
 );
 
 List<Sticky> generatedTestSticky({required Ref ref, int count = 1001}) {
@@ -134,6 +136,11 @@ List<Sticky> generatedTestSticky({required Ref ref, int count = 1001}) {
     count,
     (index) {
       final pos = lastPos - Offset(index * -100, index * -100);
+
+      // double x = (index % 25) * -400 + Random().nextInt(200).toDouble();
+      // double y = (index / 25) * -300 + Random().nextInt(200).toDouble();
+      // final pos = Offset(x, y) + const Offset(1000, 1000);
+
       return Sticky.empty().copyWith(
         id: const UuidV4().generate(),
         title: "Sticky: $index",
@@ -142,6 +149,7 @@ List<Sticky> generatedTestSticky({required Ref ref, int count = 1001}) {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         position: pos,
+        // color: ref.read(colorsProvider)[Random().nextInt(ref.read(colorsProvider).length)],
         color: ref.read(colorsProvider)[index % ref.read(colorsProvider).length],
       );
     },

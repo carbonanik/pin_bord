@@ -24,9 +24,8 @@ class _StickyDraggableState extends State<StickyDraggable> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    _x = widget.sticky.position?.dx ?? size.width / 2 - 150;
-    _y = widget.sticky.position?.dy ?? size.height / 10;
+    _x = widget.sticky.position.dx;
+    _y = widget.sticky.position.dy;
     return Consumer(builder: (context, ref, child) {
       final panPosition = ref.watch(panPositionProvider);
       final notifier = ref.watch(stickyProvider);

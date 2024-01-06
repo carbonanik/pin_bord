@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
 // export PATH="$PATH":"$HOME/.pub-cache/bin"
 // firebase login
 // flutterfire configure
+// add firebase_core to pubspec.yaml
 // git ignore
 // firebase experiments:enable webframeworks
 // firebase init hosting
