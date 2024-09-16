@@ -16,23 +16,23 @@ class StickyNotifier extends ChangeNotifier {
   }
 
   void _init() async {
-    // if ((ref.read(stickyLocalProvider).getStickies()).isEmpty) {
-    //   if (ref.read(isTestProvider)) {
-    //     final generated = generatedTestStickies(ref: ref);
-    //     _notes.addAll(generated);
-    //     _maxZIndex = generated.length;
-    //   } else {
-    _notes.add(welcomeNote());
-    _notes.add(welcomeSticker());
-    _maxZIndex = 1;
-    //   }
-    //   // add to local storage
-    //   await ref.read(stickyLocalProvider).addStickyMany(_notes);
-    //   await ref.read(zIndexCounterProvider).updateZIndex(_maxZIndex);
-    // } else {
-    // _notes.addAll(ref.read(stickyLocalProvider).getStickies());
-    // _maxZIndex = ref.read(zIndexCounterProvider).getZIndex();
-    // }
+    if ((ref.read(stickyLocalProvider).getStickies()).isEmpty) {
+      if (ref.read(isTestProvider)) {
+        final generated = generatedTestStickies(ref: ref);
+        _notes.addAll(generated);
+        _maxZIndex = generated.length;
+      } else {
+        _notes.add(welcomeNote());
+        _notes.add(welcomeSticker());
+        _maxZIndex = 1;
+      }
+      // add to local storage
+      await ref.read(stickyLocalProvider).addStickyMany(_notes);
+      await ref.read(zIndexCounterProvider).updateZIndex(_maxZIndex);
+    } else {
+      _notes.addAll(ref.read(stickyLocalProvider).getStickies());
+      _maxZIndex = ref.read(zIndexCounterProvider).getZIndex();
+    }
     __updateList();
   }
 
