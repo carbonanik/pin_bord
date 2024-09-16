@@ -23,6 +23,7 @@ abstract class Sticky extends HiveObject with _$Sticky {
     @HiveField(6) @ColorJsonConverter() final Color? color,
     @HiveField(7) @OffsetJsonConverter() required final Offset position,
     @HiveField(8) @SizeJsonConverter() final Size? size,
+    @HiveField(9) required final StickyType type,
   }) = _Sticky;
 
   factory Sticky.fromJson(Map<String, dynamic> json) => _$StickyFromJson(json);
@@ -37,7 +38,8 @@ abstract class Sticky extends HiveObject with _$Sticky {
       zIndex: 0,
       color: unselectedColor,
       position: const Offset(250, 250),
-      size: const Size(0, 0),
+      size: const Size(300, 300),
+      type: StickyType.note,
     );
   }
 
@@ -49,6 +51,14 @@ abstract class Sticky extends HiveObject with _$Sticky {
     );
     return updated;
   }
+}
+
+@HiveType(typeId: 1, adapterName: 'StickyTypeAdapter')
+enum StickyType{
+  @HiveField(0)
+  note,
+  @HiveField(1)
+  sticker,
 }
 
 @freezed

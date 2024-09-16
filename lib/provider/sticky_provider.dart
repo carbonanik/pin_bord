@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
+import 'package:pin_bord/presentation/widget/svg_sticker_data.dart';
 import 'package:pin_bord/provider/is_test_provider.dart';
 import 'package:pin_bord/provider/note_color_provider.dart';
 import 'package:pin_bord/provider/screen_size_provider.dart';
@@ -15,22 +16,23 @@ class StickyNotifier extends ChangeNotifier {
   }
 
   void _init() async {
-    if ((ref.read(stickyLocalProvider).getStickies()).isEmpty) {
-      if (ref.read(isTestProvider)) {
-        final generated = generatedTestSticky(ref: ref);
-        _notes.addAll(generated);
-        _maxZIndex = generated.length;
-      } else {
-        _notes.add(welcomeNote(ref.read(screenSizeProvider)));
-        _maxZIndex = 1;
-      }
-      // add to local storage
-      await ref.read(stickyLocalProvider).addStickyMany(_notes);
-      await ref.read(zIndexCounterProvider).updateZIndex(_maxZIndex);
-    } else {
-      _notes.addAll(ref.read(stickyLocalProvider).getStickies());
-      _maxZIndex = ref.read(zIndexCounterProvider).getZIndex();
-    }
+    // if ((ref.read(stickyLocalProvider).getStickies()).isEmpty) {
+    //   if (ref.read(isTestProvider)) {
+    //     final generated = generatedTestStickies(ref: ref);
+    //     _notes.addAll(generated);
+    //     _maxZIndex = generated.length;
+    //   } else {
+    _notes.add(welcomeNote());
+    _notes.add(welcomeSticker());
+    _maxZIndex = 1;
+    //   }
+    //   // add to local storage
+    //   await ref.read(stickyLocalProvider).addStickyMany(_notes);
+    //   await ref.read(zIndexCounterProvider).updateZIndex(_maxZIndex);
+    // } else {
+    // _notes.addAll(ref.read(stickyLocalProvider).getStickies());
+    // _maxZIndex = ref.read(zIndexCounterProvider).getZIndex();
+    // }
     __updateList();
   }
 
@@ -119,18 +121,33 @@ final stickyProvider = ChangeNotifierProvider<StickyNotifier>((ref) {
   return StickyNotifier(ref);
 });
 
-Sticky welcomeNote(Size screenSize) => Sticky.empty().copyWith(
-  id: const UuidV4().generate(),
-  zIndex: 4,
-  title: 'Welcome to Pin Bord!',
-  content: 'Hey 👋 \n\nThis is a simple app to pin your notes. \n\n🎉',
-  createdAt: DateTime.now(),
-  updatedAt: DateTime.now(),
-  color: unselectedColor,
-  position: Offset(screenSize.width / 2 - 150, screenSize.height / 10),
-);
+Sticky welcomeNote() => Sticky.empty().copyWith(
+      id: const UuidV4().generate(),
+      zIndex: 4,
+      title: 'Welcome to Pin Bord!',
+      content: 'Hey 👋 \n\nThis is a simple app to pin your notes. \n\n🎉',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      color: unselectedColor,
+      type: StickyType.note,
+      position: const Offset(300, 400),
+      size: const Size(300, 300),
+    );
 
-List<Sticky> generatedTestSticky({required Ref ref, int count = 1001}) {
+Sticky welcomeSticker() => Sticky.empty().copyWith(
+      id: const UuidV4().generate(),
+      zIndex: 3,
+      title: 'Sticker One',
+      content: SvgStickerData.sticker1,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      color: unselectedColor,
+      type: StickyType.sticker,
+      position: const Offset(360, 200),
+      size: const Size(160, 160),
+    );
+
+List<Sticky> generatedTestStickies({required Ref ref, int count = 1001}) {
   final lastPos = Offset(count * -100, count * -100) + const Offset(1000, 1000);
   final generated = List.generate(
     count,
@@ -150,7 +167,8 @@ List<Sticky> generatedTestSticky({required Ref ref, int count = 1001}) {
         updatedAt: DateTime.now(),
         position: pos,
         // color: ref.read(colorsProvider)[Random().nextInt(ref.read(colorsProvider).length)],
-        color: ref.read(colorsProvider)[index % ref.read(colorsProvider).length],
+        color:
+            ref.read(colorsProvider)[index % ref.read(colorsProvider).length],
       );
     },
   );

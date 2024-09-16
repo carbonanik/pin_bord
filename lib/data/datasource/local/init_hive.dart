@@ -9,6 +9,7 @@ Future<void> initHiveDriver() async {
   Hive.registerAdapter(OffsetAdapter());
   Hive.registerAdapter(SizeAdapter());
   Hive.registerAdapter(StickyAdapter());
+  Hive.registerAdapter(StickyTypeAdapter());
   await Hive.openBox<Sticky>(stickyBox);
   await Hive.openBox<Sticky>(stickyLoadTestBox);
   await Hive.openBox<int>(zIndexCounterBox);

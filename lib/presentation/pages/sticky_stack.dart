@@ -1,13 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pin_bord/presentation/widget/mini_map.dart';
 import 'package:pin_bord/presentation/widget/sticky_draggable.dart';
 import 'package:pin_bord/provider/in_window_sticky_provider.dart';
 import 'package:pin_bord/provider/is_test_provider.dart';
 import 'package:pin_bord/provider/pan_position_provider.dart';
+import 'package:pin_bord/provider/zoom_provider.dart';
 import 'package:pin_bord/routes/app_router.dart';
-import 'package:pin_bord/util/responsive.dart';
 
 @RoutePage()
 class StickyStackPage extends StatefulWidget {
@@ -39,7 +38,9 @@ class _StickyStackPageState extends State<StickyStackPage> {
             children: [
               Positioned.fill(
                 child: GestureDetector(
-                  onPanUpdate: (details) => ref.read(panPositionProvider.notifier).state += details.delta,
+                  onPanUpdate: (details) => ref
+                      .read(panPositionProvider.notifier)
+                      .state += details.delta,
                   child: Container(color: Colors.transparent),
                 ),
               ),
@@ -49,6 +50,31 @@ class _StickyStackPageState extends State<StickyStackPage> {
                 child: FilledButton(
                   onPressed: () => ref.read(isTestProvider.notifier).toggle(),
                   child: const Text('Test with 1000 stickies'),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        final zoom = ref.read(zoomProvider);
+                        if (zoom >= 3.0) return;
+                        ref.read(zoomProvider.notifier).state = zoom + .1;
+                      },
+                      icon: const Icon(Icons.zoom_in),
+                    ),
+                    Text(ref.watch(zoomProvider).toStringAsFixed(1)),
+                    IconButton(
+                      onPressed: () {
+                        final zoom = ref.read(zoomProvider);
+                        if (zoom <= 0.1) return;
+                        ref.read(zoomProvider.notifier).state = zoom - .1;
+                      },
+                      icon: const Icon(Icons.zoom_out),
+                    ),
+                  ],
                 ),
               ),
               ...inWindow,

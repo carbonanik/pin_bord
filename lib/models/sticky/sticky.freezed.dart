@@ -12,7 +12,7 @@ part of 'sticky.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Sticky _$StickyFromJson(Map<String, dynamic> json) {
   return _Sticky.fromJson(json);
@@ -41,9 +41,15 @@ mixin _$Sticky {
   @HiveField(8)
   @SizeJsonConverter()
   Size? get size => throw _privateConstructorUsedError;
+  @HiveField(9)
+  StickyType get type => throw _privateConstructorUsedError;
 
+  /// Serializes this Sticky to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Sticky
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StickyCopyWith<Sticky> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -61,7 +67,8 @@ abstract class $StickyCopyWith<$Res> {
       @HiveField(5) int zIndex,
       @HiveField(6) @ColorJsonConverter() Color? color,
       @HiveField(7) @OffsetJsonConverter() Offset position,
-      @HiveField(8) @SizeJsonConverter() Size? size});
+      @HiveField(8) @SizeJsonConverter() Size? size,
+      @HiveField(9) StickyType type});
 }
 
 /// @nodoc
@@ -74,6 +81,8 @@ class _$StickyCopyWithImpl<$Res, $Val extends Sticky>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Sticky
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -86,6 +95,7 @@ class _$StickyCopyWithImpl<$Res, $Val extends Sticky>
     Object? color = freezed,
     Object? position = null,
     Object? size = freezed,
+    Object? type = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -124,6 +134,10 @@ class _$StickyCopyWithImpl<$Res, $Val extends Sticky>
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
               as Size?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as StickyType,
     ) as $Val);
   }
 }
@@ -144,7 +158,8 @@ abstract class _$$StickyImplCopyWith<$Res> implements $StickyCopyWith<$Res> {
       @HiveField(5) int zIndex,
       @HiveField(6) @ColorJsonConverter() Color? color,
       @HiveField(7) @OffsetJsonConverter() Offset position,
-      @HiveField(8) @SizeJsonConverter() Size? size});
+      @HiveField(8) @SizeJsonConverter() Size? size,
+      @HiveField(9) StickyType type});
 }
 
 /// @nodoc
@@ -155,6 +170,8 @@ class __$$StickyImplCopyWithImpl<$Res>
       _$StickyImpl _value, $Res Function(_$StickyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Sticky
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -167,6 +184,7 @@ class __$$StickyImplCopyWithImpl<$Res>
     Object? color = freezed,
     Object? position = null,
     Object? size = freezed,
+    Object? type = null,
   }) {
     return _then(_$StickyImpl(
       id: null == id
@@ -205,6 +223,10 @@ class __$$StickyImplCopyWithImpl<$Res>
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
               as Size?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as StickyType,
     ));
   }
 }
@@ -222,7 +244,8 @@ class _$StickyImpl extends _Sticky {
       @HiveField(5) required this.zIndex,
       @HiveField(6) @ColorJsonConverter() this.color,
       @HiveField(7) @OffsetJsonConverter() required this.position,
-      @HiveField(8) @SizeJsonConverter() this.size})
+      @HiveField(8) @SizeJsonConverter() this.size,
+      @HiveField(9) required this.type})
       : super._();
 
   factory _$StickyImpl.fromJson(Map<String, dynamic> json) =>
@@ -258,14 +281,17 @@ class _$StickyImpl extends _Sticky {
   @HiveField(8)
   @SizeJsonConverter()
   final Size? size;
+  @override
+  @HiveField(9)
+  final StickyType type;
 
   @override
   String toString() {
-    return 'Sticky(id: $id, title: $title, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, zIndex: $zIndex, color: $color, position: $position, size: $size)';
+    return 'Sticky(id: $id, title: $title, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, zIndex: $zIndex, color: $color, position: $position, size: $size, type: $type)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StickyImpl &&
@@ -280,15 +306,18 @@ class _$StickyImpl extends _Sticky {
             (identical(other.color, color) || other.color == color) &&
             (identical(other.position, position) ||
                 other.position == position) &&
-            (identical(other.size, size) || other.size == size));
+            (identical(other.size, size) || other.size == size) &&
+            (identical(other.type, type) || other.type == type));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, title, content, createdAt,
-      updatedAt, zIndex, color, position, size);
+      updatedAt, zIndex, color, position, size, type);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Sticky
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StickyImplCopyWith<_$StickyImpl> get copyWith =>
@@ -312,7 +341,8 @@ abstract class _Sticky extends Sticky {
       @HiveField(5) required final int zIndex,
       @HiveField(6) @ColorJsonConverter() final Color? color,
       @HiveField(7) @OffsetJsonConverter() required final Offset position,
-      @HiveField(8) @SizeJsonConverter() final Size? size}) = _$StickyImpl;
+      @HiveField(8) @SizeJsonConverter() final Size? size,
+      @HiveField(9) required final StickyType type}) = _$StickyImpl;
   _Sticky._() : super._();
 
   factory _Sticky.fromJson(Map<String, dynamic> json) = _$StickyImpl.fromJson;
@@ -348,7 +378,13 @@ abstract class _Sticky extends Sticky {
   @SizeJsonConverter()
   Size? get size;
   @override
-  @JsonKey(ignore: true)
+  @HiveField(9)
+  StickyType get type;
+
+  /// Create a copy of Sticky
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StickyImplCopyWith<_$StickyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -364,8 +400,12 @@ mixin _$CreateSticky {
   @ColorJsonConverter()
   Color? get color => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateSticky to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateSticky
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateStickyCopyWith<CreateSticky> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -389,6 +429,8 @@ class _$CreateStickyCopyWithImpl<$Res, $Val extends CreateSticky>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateSticky
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -432,6 +474,8 @@ class __$$CreateStickyImplCopyWithImpl<$Res>
       _$CreateStickyImpl _value, $Res Function(_$CreateStickyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateSticky
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -481,7 +525,7 @@ class _$CreateStickyImpl implements _CreateSticky {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreateStickyImpl &&
@@ -490,11 +534,13 @@ class _$CreateStickyImpl implements _CreateSticky {
             (identical(other.color, color) || other.color == color));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, title, content, color);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateSticky
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateStickyImplCopyWith<_$CreateStickyImpl> get copyWith =>
@@ -524,8 +570,11 @@ abstract class _CreateSticky implements CreateSticky {
   @override
   @ColorJsonConverter()
   Color? get color;
+
+  /// Create a copy of CreateSticky
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateStickyImplCopyWith<_$CreateStickyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -541,8 +590,12 @@ mixin _$UpdateSticky {
   @ColorJsonConverter()
   Color? get color => throw _privateConstructorUsedError;
 
+  /// Serializes this UpdateSticky to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UpdateSticky
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UpdateStickyCopyWith<UpdateSticky> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -566,6 +619,8 @@ class _$UpdateStickyCopyWithImpl<$Res, $Val extends UpdateSticky>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UpdateSticky
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -609,6 +664,8 @@ class __$$UpdateStickyImplCopyWithImpl<$Res>
       _$UpdateStickyImpl _value, $Res Function(_$UpdateStickyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UpdateSticky
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -658,7 +715,7 @@ class _$UpdateStickyImpl implements _UpdateSticky {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdateStickyImpl &&
@@ -667,11 +724,13 @@ class _$UpdateStickyImpl implements _UpdateSticky {
             (identical(other.color, color) || other.color == color));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, title, content, color);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UpdateSticky
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateStickyImplCopyWith<_$UpdateStickyImpl> get copyWith =>
@@ -701,8 +760,11 @@ abstract class _UpdateSticky implements UpdateSticky {
   @override
   @ColorJsonConverter()
   Color? get color;
+
+  /// Create a copy of UpdateSticky
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateStickyImplCopyWith<_$UpdateStickyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
