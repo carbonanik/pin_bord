@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_bord/models/sticky/sticky.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 
 class StickySticker extends ConsumerWidget {
   final Sticky sticky;
@@ -14,14 +14,15 @@ class StickySticker extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-      width: sticky.size?.width,
+      width: 160,
+      height: 160,
       child: Stack(
         children: [
           Container(
             constraints: const BoxConstraints(minHeight: 100),
             padding: const EdgeInsets.all(10),
             // color: sticky.color ?? ref.read(colorsProvider).last,
-            child: SvgPicture.string(sticky.content),
+            // child: SvgPicture.string(sticky.content),
           ),
           // Positioned(
           //   top: 0,

@@ -17,6 +17,8 @@ class StickyStackPage extends StatefulWidget {
 }
 
 class _StickyStackPageState extends State<StickyStackPage> {
+  bool showTest = false;
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -44,14 +46,15 @@ class _StickyStackPageState extends State<StickyStackPage> {
                   child: Container(color: Colors.transparent),
                 ),
               ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                child: FilledButton(
-                  onPressed: () => ref.read(isTestProvider.notifier).toggle(),
-                  child: const Text('Test with 1000 stickies'),
+              if (showTest)
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: FilledButton(
+                    onPressed: () => ref.read(isTestProvider.notifier).toggle(),
+                    child: const Text('Test with 1000 stickies'),
+                  ),
                 ),
-              ),
               Positioned(
                 bottom: 0,
                 right: 0,
