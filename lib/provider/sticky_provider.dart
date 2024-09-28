@@ -138,7 +138,7 @@ Sticky welcomeSticker() => Sticky.empty().copyWith(
       id: const UuidV4().generate(),
       zIndex: 3,
       title: 'Sticker One',
-      content: SvgStickerData.sticker1,
+      content: SvgStickerData.calender,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
       color: unselectedColor,

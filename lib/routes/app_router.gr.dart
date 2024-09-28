@@ -23,6 +23,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: CreateNotePage(key: args.key),
       );
     },
+    SelectStickerRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SelectSticker(),
+      );
+    },
     StickyStackPageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -72,6 +78,20 @@ class CreateNotePageRouteArgs {
   String toString() {
     return 'CreateNotePageRouteArgs{key: $key}';
   }
+}
+
+/// generated route for
+/// [SelectSticker]
+class SelectStickerRoute extends PageRouteInfo<void> {
+  const SelectStickerRoute({List<PageRouteInfo>? children})
+      : super(
+          SelectStickerRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SelectStickerRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

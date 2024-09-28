@@ -30,7 +30,7 @@ class _StickyDraggableState extends State<StickyDraggable> {
     return Consumer(builder: (context, ref, child) {
       final panPosition = ref.watch(panPositionProvider);
       final notifier = ref.watch(stickyProvider);
-      final double zoom = ref.watch(zoomProvider);
+      final zoom = ref.watch(zoomProvider);
 
       final stickyWidget = StickyCard(
         sticky: widget.sticky,

@@ -23,6 +23,7 @@ dependencies:
   google_fonts: ^6.1.0
   firebase_core: ^2.24.2
   flutter_svg: ^2.0.10+1
+  riverpod_annotation: ^2.3.5
 
 dev_dependencies:
   flutter_test:
@@ -34,6 +35,7 @@ dev_dependencies:
   freezed: ^2.4.3
   json_serializable: ^6.7.1
   hive_generator: ^2.0.1
+  riverpod_generator: ^2.4.3
 
 flutter:
 
