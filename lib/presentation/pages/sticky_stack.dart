@@ -99,6 +99,7 @@ class _StickyStackPageState extends State<StickyStackPage> {
                     child: const Text('Test with 1000 stickies'),
                   ),
                 ),
+              ...inWindow,
               Positioned(
                 bottom: 0,
                 right: 0,
@@ -135,7 +136,6 @@ class _StickyStackPageState extends State<StickyStackPage> {
                   ],
                 ),
               ),
-              ...inWindow,
               SizedBox(
                 width: screenSize.width,
                 height: screenSize.height,

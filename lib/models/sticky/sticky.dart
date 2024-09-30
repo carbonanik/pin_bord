@@ -43,14 +43,14 @@ abstract class Sticky extends HiveObject with _$Sticky {
     );
   }
 
-  Sticky update(UpdateSticky update) {
-    final updated = copyWith(
-      title: update.title,
-      content: update.content,
-      color: update.color,
-    );
-    return updated;
-  }
+  // Sticky update(UpdateSticky update) {
+  //   final updated = copyWith(
+  //     title: update.title,
+  //     content: update.content,
+  //     color: update.color,
+  //   );
+  //   return updated;
+  // }
 }
 
 @HiveType(typeId: 1, adapterName: 'StickyTypeAdapter')
@@ -61,24 +61,25 @@ enum StickyType{
   sticker,
 }
 
-@freezed
-class CreateSticky with _$CreateSticky {
-  const factory CreateSticky({
-    required String title,
-    required String content,
-    @ColorJsonConverter() Color? color,
-  }) = _CreateSticky;
-
-  factory CreateSticky.fromJson(Map<String, dynamic> json) => _$CreateStickyFromJson(json);
-}
-
-@freezed
-class UpdateSticky with _$UpdateSticky {
-  const factory UpdateSticky({
-    required String title,
-    required String content,
-    @ColorJsonConverter() Color? color,
-  }) = _UpdateSticky;
-
-  factory UpdateSticky.fromJson(Map<String, dynamic> json) => _$UpdateStickyFromJson(json);
-}
+// @freezed
+// class CreateSticky with _$CreateSticky {
+//   const factory CreateSticky({
+//     required String title,
+//     required String content,
+//     @ColorJsonConverter() Color? color,
+//     StickyType? type,
+//   }) = _CreateSticky;
+//
+//   factory CreateSticky.fromJson(Map<String, dynamic> json) => _$CreateStickyFromJson(json);
+// }
+//
+// @freezed
+// class UpdateSticky with _$UpdateSticky {
+//   const factory UpdateSticky({
+//     required String title,
+//     required String content,
+//     @ColorJsonConverter() Color? color,
+//   }) = _UpdateSticky;
+//
+//   factory UpdateSticky.fromJson(Map<String, dynamic> json) => _$UpdateStickyFromJson(json);
+// }

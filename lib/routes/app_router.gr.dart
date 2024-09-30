@@ -16,11 +16,9 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     CreateNotePageRoute.name: (routeData) {
-      final args = routeData.argsAs<CreateNotePageRouteArgs>(
-          orElse: () => const CreateNotePageRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: CreateNotePage(key: args.key),
+        child: const CreateNotePage(),
       );
     },
     SelectStickerRoute.name: (routeData) {
@@ -53,31 +51,16 @@ abstract class _$AppRouter extends RootStackRouter {
 
 /// generated route for
 /// [CreateNotePage]
-class CreateNotePageRoute extends PageRouteInfo<CreateNotePageRouteArgs> {
-  CreateNotePageRoute({
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
+class CreateNotePageRoute extends PageRouteInfo<void> {
+  const CreateNotePageRoute({List<PageRouteInfo>? children})
+      : super(
           CreateNotePageRoute.name,
-          args: CreateNotePageRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'CreateNotePageRoute';
 
-  static const PageInfo<CreateNotePageRouteArgs> page =
-      PageInfo<CreateNotePageRouteArgs>(name);
-}
-
-class CreateNotePageRouteArgs {
-  const CreateNotePageRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'CreateNotePageRouteArgs{key: $key}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

@@ -26,7 +26,8 @@ class UpdateNote extends ConsumerWidget {
     contentTextController.text = sticky?.content ?? '';
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      ref.read(selectedColorProvider.notifier).state = sticky?.color ?? ref.read(selectedColorProvider);
+      ref.read(selectedColorProvider.notifier).state =
+          sticky?.color ?? ref.read(selectedColorProvider);
     });
 
     return Scaffold(
@@ -35,20 +36,20 @@ class UpdateNote extends ConsumerWidget {
         titleTextController: titleTextController,
         create: false,
         onActionTap: () {
-          if (titleTextController.text.isEmpty || contentTextController.text.isEmpty) {
+          if (titleTextController.text.isEmpty ||
+              contentTextController.text.isEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Title and content cannot be empty")),
+              const SnackBar(
+                  content: Text("Title and content cannot be empty")),
             );
             return;
           }
           final notifier = ref.read(stickyProvider.notifier);
           notifier.updateSticky(
-            UpdateSticky(
-              title: titleTextController.text,
-              content: contentTextController.text,
-              color: ref.read(selectedColorProvider),
-            ),
-            updateId,
+            title: titleTextController.text,
+            content: contentTextController.text,
+            color: ref.read(selectedColorProvider),
+            id: updateId,
           );
           AutoRouter.of(context).pop();
         },

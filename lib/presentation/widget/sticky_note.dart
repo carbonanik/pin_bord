@@ -26,26 +26,22 @@ class StickyNote extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CustomPaint(
-                painter: CornerCut(
-                  color:
-                      (sticky.color ?? ref.read(colorsProvider).last).darken2(),
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Text(
-                      sticky.title,
-                      style: GoogleFonts.kalam(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: (sticky.color ?? ref.read(colorsProvider).last)
-                            .darken2(.5),
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+              Container(
+                padding: const EdgeInsets.all(10),
+                color:
+                    (sticky.color ?? ref.read(colorsProvider).last).darken2(),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: Text(
+                    sticky.title,
+                    style: GoogleFonts.kalam(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: (sticky.color ?? ref.read(colorsProvider).last)
+                          .darken2(.5),
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),
@@ -67,7 +63,7 @@ class StickyNote extends ConsumerWidget {
         ),
         Positioned(
           top: 0,
-          right: 35,
+          right: 0,
           child: GestureDetector(
             onTap: () {
               AutoRouter.of(context).push(UpdateNoteRoute(updateId: sticky.id));

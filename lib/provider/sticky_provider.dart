@@ -49,15 +49,37 @@ class StickyNotifier extends ChangeNotifier {
     return _notes.firstWhere((element) => element.id == id);
   }
 
-  void createSticky(CreateSticky createSticky) {
-    final id = const UuidV4().generate();
+  void createStickySticker({
+    required String title,
+    required String sticker,
+  }) {
     final sticky = Sticky.empty().copyWith(
-      id: id,
-      title: createSticky.title,
-      content: createSticky.content,
-      color: createSticky.color,
       zIndex: ++_maxZIndex,
+      title: title,
+      content: sticker,
+      type: StickyType.sticker,
+      size: const Size(160, 160),
     );
+    _createSticky(sticky);
+  }
+
+  void createStickyNote({
+    required String title,
+    required String content,
+    Color? color,
+  }) {
+    final sticky = Sticky.empty().copyWith(
+      zIndex: ++_maxZIndex,
+      title: title,
+      content: content,
+      color: color,
+    );
+    _createSticky(sticky);
+  }
+
+  void _createSticky(Sticky sticky) {
+    final id = const UuidV4().generate();
+    sticky = sticky.copyWith(id: id);
     _notes.add(sticky);
     _dirty.add(sticky);
     __updateList();
@@ -69,11 +91,20 @@ class StickyNotifier extends ChangeNotifier {
     __updateList();
   }
 
-  void updateSticky(UpdateSticky update, String id) {
+  void updateSticky({
+    required String id,
+    String? title,
+    String? content,
+    Color? color,
+  }) {
     final sticky = getSticky(id);
     if (sticky == null) return;
 
-    final updated = sticky.update(update);
+    final updated = sticky.copyWith(
+      title: title ?? sticky.title,
+      content: content ?? sticky.content,
+      color: color ?? sticky.color,
+    );
     _notes[_notes.indexOf(sticky)] = updated;
     _dirty.add(updated);
 
